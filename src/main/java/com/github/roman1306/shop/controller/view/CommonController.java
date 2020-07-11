@@ -1,4 +1,4 @@
-package com.github.roman1306.shop.controller;
+package com.github.roman1306.shop.controller.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

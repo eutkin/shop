@@ -1,4 +1,4 @@
-package com.github.roman1306.shop.controller;
+package com.github.roman1306.shop.controller.view;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.service.UserService;

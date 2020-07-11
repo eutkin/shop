@@ -143,17 +143,38 @@ databaseChangeLog:
                     references: departments(department_id)
                     nullable: false
               - column:
+                  name: speciality_id
+                  type: UUID
+                  remarks: Специализация врача
+                  constraints:
+                    foreignKeyName: fk_doctor_slots_speciality_id
+                    references: specialties(speciality_id) # добавить check по таблице doctor_specialities
+                    nullable: false
+              - column:
                   name: time_slot
                   type: datetime
                   remarks: Доступный временной слот
                   constraints:
                     nullable: false
+        - createTable:
+            tableName: records
+            remarks: Запись пациента
+            columns:
               - column:
                   name: patient_id
                   type: UUID
                   remarks: Идентификатор пациента, записанного на прием на данный слот. Если значение 'null', то слот свободен
                   constraints:
-                    nullable: true
-                    foreignKeyName: fk_doctor_slots_patient_id
+                    nullable: false
+                    foreignKeyName: fk_records_patient_id
                     references: patients(patient_id)
+              - column:
+                  name: slot_id
+                  type: UUID
+                  remarks: Идентификатор свободного слота врача
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_records_slot_id
+                    references: doctsor_slot(slot_id)
+
 

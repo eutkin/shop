@@ -1,3 +1,5 @@
 spring:
   liquibase:
     change-log: classpath:master.yml
+  application:
+    api-prefix: /api/v1

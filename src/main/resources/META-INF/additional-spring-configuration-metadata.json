@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.application.api-prefix",
+      "type": "java.lang.String",
+      "description": "Prefix for REST API."
+  }
+] }
