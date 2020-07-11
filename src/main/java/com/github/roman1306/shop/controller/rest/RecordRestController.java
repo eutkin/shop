@@ -7,6 +7,7 @@ import com.github.roman1306.shop.service.RecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,10 @@ public class RecordRestController {
     }
 
     @PostMapping
-    RecordPresentation recordPatient(@RequestBody RecordPatientRequest request) {
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    RecordPresentation recordPatient(
+            @AuthenticationPrincipal User user,
+            @RequestBody RecordPatientRequest request) {
         return recordService.createRecord(request);
     }
 
