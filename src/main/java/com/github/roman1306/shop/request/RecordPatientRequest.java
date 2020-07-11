@@ -8,14 +8,10 @@ import java.util.UUID;
 @Data
 public class RecordPatientRequest {
 
-    private final UUID specialityId;
-    private final UUID departmentId;
     private final UUID slotId;
 
     @JsonCreator
-    public RecordPatientRequest(UUID specialityId, UUID departmentId, UUID slotId) {
-        this.specialityId = specialityId;
-        this.departmentId = departmentId;
+    public RecordPatientRequest(UUID slotId) {
         this.slotId = slotId;
     }
 }
