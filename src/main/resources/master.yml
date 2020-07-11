@@ -1,5 +1,3 @@
 databaseChangeLog:
   - includeAll:
       path: ./migration
-  - include:
-      file: ./data.sql

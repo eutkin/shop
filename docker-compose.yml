@@ -1,0 +1,29 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres
+    hostname: postgres
+    container_name: postgres
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: registry
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+  registry:
+    build: .
+    container_name: registry
+    ports:
+    - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/registry
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCE_DATA: classpath:local/data.sql
+    depends_on:
+      - postgres
+volumes:
+  database-data:

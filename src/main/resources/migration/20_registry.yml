@@ -1,0 +1,153 @@
+databaseChangeLog:
+  - changeSet:
+      id: registature
+      author: roman1306
+      changes:
+        - createTable:
+            tableName: specialties
+            remarks: Специальности
+            columns:
+              - column:
+                  name: speciality_id
+                  type: UUID
+                  remarks: Идентификатор специальность
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  remarks: Название специальности
+        - createTable:
+            tableName: departments
+            remarks: Отделения медицинского заведения
+            columns:
+              - column:
+                  name: department_id
+                  type: UUID
+                  remarks: Идентификатор отделения
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  remarks: Название отделения
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  remarks: Адрес отделения
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: doctors
+            remarks: Врачи
+            columns:
+              - column:
+                  name: doctor_id
+                  type: UUID
+                  remarks: Идентификатор врача
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  remarks: ФИО врача
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: varchar(50)
+                  remarks: Ссылка на пользователя системы
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_doctors_user_id
+                    references: users(name)
+        - createTable:
+            tableName: doctor_specialities
+            remarks: Специальности врачей
+            columns:
+              - column:
+                  name: doctor_id
+                  type: UUID
+                  constraints:
+                    reference: doctors(doctor_id)
+                    foreignKeyName: fk_doctor_specialities_doctor
+              - column:
+                  name: speciality_id
+                  type: UUID
+                  remarks: Идентификатор специальности
+                  constraints:
+                    foreignKeyName: fk_doctor_specialities_speciality
+                    reference: specialties(speciality_id)
+                    nullable: false
+        - addPrimaryKey:
+            tableName: doctor_specialities
+            columnNames: doctor_id, speciality_id
+        - createTable:
+            tableName: patients
+            remarks: Пациенты
+            columns:
+              - column:
+                  name: patient_id
+                  type: UUID
+                  remarks: Идентификатор пациента
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  remarks: Имя пациента
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: varchar(50)
+                  remarks: Ссылка на пользователя
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_patients_user_id
+                    references: users(name)
+        - createTable:
+            tableName: doctor_slots
+            remarks: Временные и географические слоты врачей (в каком отделение и в какое время врач принимает)
+            columns:
+              - column:
+                  name: slot_id
+                  type: UUID
+                  remarks: Идентификатор доступного слота
+              - column:
+                  name: doctor_id
+                  type: UUID
+                  remarks: Идентфикатор врача
+                  constraints:
+                    foreignKeyName: fk_doctor_slots_doctor_id
+                    reference: doctors(doctor_id)
+                    nullable: false
+              - column:
+                  name: departament_id
+                  type: UUID
+                  remarks: Идентфикатор отделения
+                  constraints:
+                    foreignKeyName: fk_doctor_slots_departament_id
+                    reference: departaments(departament_id)
+                    nullable: false
+              - column:
+                  name: time_slot
+                  type: datetime
+                  remarks: Доступный временной слот
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patient_id
+                  type: UUID
+                  remarks: Идентификатор пациента, записанного на прием на данный слот. Если значение 'null', то слот свободен
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_doctor_slots_patient_id
+                    references: patients(patient_id)
+
