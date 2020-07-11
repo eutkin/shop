@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: registature
+      id: registry
       author: roman1306
       changes:
         - createTable:
@@ -59,6 +59,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: description
+                  type: varchar(4000)
+                  remarks: Краткое описание врача
+                  constraints:
+                    nullable: false
+              - column:
                   name: user_id
                   type: varchar(50)
                   remarks: Ссылка на пользователя системы
@@ -74,7 +80,7 @@ databaseChangeLog:
                   name: doctor_id
                   type: UUID
                   constraints:
-                    reference: doctors(doctor_id)
+                    references: doctors(doctor_id)
                     foreignKeyName: fk_doctor_specialities_doctor
               - column:
                   name: speciality_id
@@ -82,7 +88,7 @@ databaseChangeLog:
                   remarks: Идентификатор специальности
                   constraints:
                     foreignKeyName: fk_doctor_specialities_speciality
-                    reference: specialties(speciality_id)
+                    references: specialties(speciality_id)
                     nullable: false
         - addPrimaryKey:
             tableName: doctor_specialities
@@ -126,15 +132,15 @@ databaseChangeLog:
                   remarks: Идентфикатор врача
                   constraints:
                     foreignKeyName: fk_doctor_slots_doctor_id
-                    reference: doctors(doctor_id)
+                    references: doctors(doctor_id)
                     nullable: false
               - column:
                   name: departament_id
                   type: UUID
                   remarks: Идентфикатор отделения
                   constraints:
-                    foreignKeyName: fk_doctor_slots_departament_id
-                    reference: departaments(departament_id)
+                    foreignKeyName: fk_doctor_slots_department_id
+                    references: departments(department_id)
                     nullable: false
               - column:
                   name: time_slot
