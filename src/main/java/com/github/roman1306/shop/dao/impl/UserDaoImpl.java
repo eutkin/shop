@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
         String sql = this.sqlHolder.load("sql/get-user.sql");
         final User user = new User();
         this.jdbc.query(sql, (rs, i) -> {
-            String name = rs.getString("name");
+            String name = rs.getString("username");
             String password = rs.getString("password");
             String role = rs.getString("role");
             return user.setName(name)

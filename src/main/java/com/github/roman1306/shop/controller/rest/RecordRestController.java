@@ -26,7 +26,7 @@ public class RecordRestController {
     RecordPresentation recordPatient(
             @AuthenticationPrincipal User user,
             @RequestBody RecordPatientRequest request) {
-        return recordService.createRecord(request);
+        return recordService.createRecord(request, user);
     }
 
     @GetMapping

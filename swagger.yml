@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: Регистратура Онлайн
+  version: "0.0.1"
+tags:
+  - name: Запись на прием
+    description: Функционал, позволяющий записать пациента на прием
+  - name: Отмена записи
+paths:
+  /record{id}:
+    delete:
+      summary: Отменить запись к врачу
+      tags:
+        - Отмена записи
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+            format: uuid
+            example:  25c57943-20c8-4a35-a7a3-823e94a7c863
+          required: true
+      responses:
+        200:
+          description: Запись успешно удалена
+        400:
+          description: Время записи не актуально
+  /departments:
+    get:
+      summary: Возвращает список отделений клиники
+      tags:
+        - Запись на прием
+      responses:
+        200:
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  $ref: '#/components/schemas/Department'
+  /specialities:
+    get:
+      summary: Возвращает список доступных специальностей
+      tags:
+        - Запись на прием
+      responses:
+        200:
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  $ref: '#/components/schemas/Speciality'
+  /slot/{deparmentId}/{specilialityId}:
+    get:
+      summary: Возвращает список временных слотов врачей для выбранного отделения и специальности
+      tags:
+        - Запись на прием
+      parameters:
+        - name: deparmentId
+          in: path
+          description: Идентификатор отделения
+          schema:
+            type: string
+            format: uuid
+            example: f4b84514-a453-42c9-b845-d3bcb65bfe67
+          required: true
+        - name: specilialityId
+          in: path
+          description: Идентификатор отделения
+          schema:
+            type: string
+            format: uuid
+            example: 8b573b86-4469-46b8-bd58-1a6f8e61ccd2
+          required: true
+      responses:
+        200:
+          description: Успешная запись
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+components:
+  schemas:
+    Department:
+      description: Отделение клиники
+      type: object
+      properties:
+        id:
+          description: Идентификатор отделения клиники
+          type: string
+          format: uuid
+          example: f4b84514-a453-42c9-b845-d3bcb65bfe67
+        name:
+          description: Название отделения клиники
+          type: string
+          example: На Вавилова
+      required:
+        - id
+        - name
+    Speciality:
+      description: Специальность врача
+      type: object
+      properties:
+        id:
+          description: Идентификатор специальности
+          type: string
+          format: uuid
+          example: 8b573b86-4469-46b8-bd58-1a6f8e61ccd2
+        name:
+          type: string
+          example: Хирург
+      required:
+        - id
+        - name
+    Record:
+      description: Запись к врачу
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 25c57943-20c8-4a35-a7a3-823e94a7c863
+        dateTime:
+          type: string
+          format: timestamp
+        speciality:
+          type: string
+        doctor:
+          type: object
+          properties:
+            id:
+              type: string
+              format: binary
+              example: 05999e2f-6351-4b55-bf86-30060184d6e3
+            name:
+              type: string
+              example: Васильев Иван Дмитриевич
+            desc:
+              type: string
+              example: Закончил Высшую Медицинскую академию в 2007 году, Врач Высшей категории
+          required:
+            - id
+            - name
+            - desc
+      required:
+        - id
+        - dateTime
+        - speciality
+        - doctor

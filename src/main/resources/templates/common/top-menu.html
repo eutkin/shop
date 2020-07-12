@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div th:fragment="menu">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" th:href=@{/}">
+                    <th:block th:text="#{common.menu.my-records}">
+                        <span class="sr-only">(current)</span>
+                    </th:block>
+                </a>
+                <a class="nav-item nav-link" th:href="@{/doctors}" th:text="#{common.menu.doctors}"></a>
+                <a class="nav-item nav-link" th:href="@{/contacts}" th:text="#{common.menu.contacts}"></a>
+                <a class="nav-item nav-link" th:href="@{/logout}" th:text="#{common.menu.logout}"></a>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

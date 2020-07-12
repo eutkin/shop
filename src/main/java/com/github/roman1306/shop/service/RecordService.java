@@ -10,7 +10,7 @@ import org.springframework.lang.NonNull;
 public interface RecordService {
 
     @NonNull
-    RecordPresentation createRecord(@NonNull RecordPatientRequest request);
+    RecordPresentation createRecord(@NonNull RecordPatientRequest request, User user);
 
     @NonNull
     Page<RecordPresentation> getMyRecords(@NonNull User user, Pageable pageable);
