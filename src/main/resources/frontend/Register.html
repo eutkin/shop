@@ -1,79 +1,81 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	<title>Регистрация</title>
-	<link href="bootstrap-4.5.0-dist\css\bootstrap.min.css" rel="stylesheet">	
-	<link href="css\index.css" rel="stylesheet">
-	</head>
-	
-	<body class="text-center">
-	
-		<form class="form-regystry">
-			<img src="img\hospital.png" width="100" height="100">
-			<h1 class="h3 mb-3 font-weight-normal">Регистрация нового пользователя</h1>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Введите ваше имя</label>
-				<div class="col-6">
-					<input class="form-control" placeholder="First name" ></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Введите вашу фамилию</label>
-				<div class="col-6">
-					<input class="form-control" placeholder="Last name" ></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Введите дату вашего рождения</label>
-				<div class="col-6">
-					<input class="form-control" type="Date"></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Введите ваше логин</label>
-				<div class="col-6">
-					<input class="form-control" placeholder="Login"></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Введите ваш e-mail</label>
-				<div class="col-6">
-					<input class="form-control" placeholder="E-mail" type="email"></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Придумайте пароль</label>
-				<div class="col-6">
-					<input class="form-control" placeholder="Password" type="password" id="password1"></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Повторите пароль</label>
-				<div class="col-6">
-					<input class="form-control" placeholder="Password" type="password" id="password2"></input>
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-6 col-form-label text-left">Ваш статус</label>
-				<div class="col-6">
-					<select class="form-control">
-						<option selected>Пациент</option>
-						<option>Врач</option>
-					</select>
-				</div>
-			</div>
-			
-			<input type="submit" class="btn btn-ls btn-danger btn-block" value="Зарегистрироваться"></input>
-			<p class="mt-5 mb-3 text-muted">© 2020 HOSPITAL</p>
-		</form>
-		
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="css\index.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+<form class="form-regystry">
+    <img src="img\hospital.png" width="100" height="100">
+    <h1 class="h3 mb-3 font-weight-normal">Регистрация нового пользователя</h1>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Введите ваше имя</label>
+        <div class="col-6">
+            <input class="form-control" placeholder="First name"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Введите вашу фамилию</label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Last name"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Введите дату вашего рождения</label>
+        <div class="col-6">
+            <input class="form-control" type="Date"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Введите ваше логин</label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Login"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Введите ваш e-mail</label>
+        <div class="col-6">
+            <input class="form-control" placeholder="E-mail" type="email"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Придумайте пароль</label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Password" type="password" id="password1"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Повторите пароль</label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Password" type="password" id="password2"></input>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left">Ваш статус</label>
+        <div class="col-6">
+            <select class="form-control">
+                <option selected>Пациент</option>
+                <option>Врач</option>
+            </select>
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-ls btn-danger btn-block" value="Зарегистрироваться"></input>
+    <p class="mt-5 mb-3 text-muted">© 2020 HOSPITAL</p>
+</form>
+
+</body>
 </html>
