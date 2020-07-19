@@ -9,12 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
-public class UserDaoImpl implements UserDao {
+@Transactional
+public class JdbcUserDao implements UserDao {
 
     private final JdbcOperations jdbc;
     private final SqlHolder sqlHolder;
 
-    public UserDaoImpl(
+    public JdbcUserDao(
             @NonNull JdbcOperations jdbc,
             @NonNull SqlHolder sqlHolder
     ) {

@@ -17,9 +17,9 @@ import java.util.UUID;
 @Service
 public class DefaultRecordService implements RecordService {
 
-    private final RecordDao recordDao;
+    private final RecordDao<RecordPresentation> recordDao;
 
-    public DefaultRecordService(@NonNull RecordDao recordDao) {
+    public DefaultRecordService(@NonNull RecordDao<RecordPresentation> recordDao) {
         this.recordDao = recordDao;
     }
 
@@ -30,7 +30,7 @@ public class DefaultRecordService implements RecordService {
         UUID slotId = request.getSlotId();
         UUID patientId = this.recordDao.findPatientIdByUserId(user.getUsername())
                 .orElseThrow(() -> new UserIsNotPatientException(user));
-        boolean busy = this.recordDao.checkSlot(slotId);
+        boolean busy = this.recordDao.busySlot(slotId);
         if (busy) {
             throw new SlotAlreadyBookedException();
         }
