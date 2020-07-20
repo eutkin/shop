@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{page.patient.my-record.title}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../static/css/product.css">
+</head>
+
+<body>
+<header th:insert="common/top-menu.html :: menu"></header>
+
+<button type="submit" class="btn btn-danger button-margin" data-toggle="modal" data-target="#recordModal"
+        th:text="#{page.patient.my-record.button.new-record}">
+</button>
+
+<!-- Modal -->
+
+<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" id="Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{page.patient.my-record.create.header}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="modal-body">
+
+                <ul class="nav nav-tabs d-none" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="speciality-tab" data-toggle="tab" href="#speciality" role="tab"
+                           aria-controls="speciality" aria-selected="true"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="deprtment-tab" data-toggle="tab" href="#department" role="tab"
+                           aria-controls="department" aria-selected="false"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="slotTime-tab" data-toggle="tab" href="#slotTime" role="tab"
+                           aria-controls="slotTime" aria-selected="false"></a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+
+                    <div class="tab-pane fade show active" id="speciality" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="list-group list-group-flush">
+                            <h2 class="h3 mb-3 font-weight-normal"
+                                th:text="#{page.patient.my-record.create.choice-speciality}"></h2>
+                            <th:block th:each=" speciality : ${specialities}">
+                                <button type="button" class="list-group-item list-group-item-action"
+                                        th:text="${speciality.name}">
+                                </button>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="department" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="list-group list-group-flush">
+                            <h2 class="h3 mb-3 font-weight-normal"
+                                th:text="#{page.patient.my-record.create.choice-department}"></h2>
+                            <th:block th:each="department : ${departments}">
+                                <button type="button" class="list-group-item list-group-item-action"
+                                        th:text="${department.name}">
+                                </button>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="slotTime" role="tabpanel" aria-labelledby="contact-tab">
+
+                        <h2 class="h3 mb-3 font-weight-normal" th:text="#{page.patient.my-record.create.date}"></h2>
+                        <ul class="nav nav-pills nav-fill">
+                            <th:block th:each=" slot : ${slots}">
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger" href="#" th:text="${slot.date}"></a>
+                                </li>
+                            </th:block>
+                        </ul>
+
+                        <h2 class="h3 mb-3 font-weight-normal" th:text="#{page.patient.my-record.create.time}"></h2>
+                        <div class="container-fluid">
+                            <th:block th:each="doctor : ${doctors}">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <button type="button" class="example-popover" data-toggle="popover"
+                                                data-trigger="focus"
+                                                th:attr="title=${doctor.name}, data-content=${doctor.description}">
+                                            <img src="static\img\defaultAvatar.png" width="90" height="80">
+                                        </button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-margin" id="slot-storage">
+                                            <th:block th:each="slot : ${slots}">
+                                                <button type="button" class="btn btn-danger btn-sm col-margin"
+                                                        th:text="${slot.time}">
+                                                </button>
+                                            </th:block>
+                                            <br>
+                                            <th:block th:each="slot : ${slots}">
+                                                <button type="button" class="btn btn-danger btn-sm col-margin"
+                                                        th:text="${slot.time}">
+                                                </button>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary btnPrevious"
+                        th:text="#{page.patient.my-record.create.btn-previous}">
+
+                </button>
+                <button type="submit" class="btn btn-primary btnNext"
+                        th:text="#{page.patient.my-record.create.btn-next}">
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-danger table-striped">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{page.patient.my-record.records.datetime}"></th>
+        <th scope="col" th:text="#{page.patient.my-record.records.speciality}"></th>
+        <th scope="col" th:text="#{page.patient.my-record.records.doctor}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="record : ${records}">
+        <tr>
+            <td th:text="${record.slot.time}"></td>
+            <td th:text="${record.slot.speciality.name}"></td>
+            <td th:text="${record.slot.doctor.name}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link text-white bg-danger badge-dark" href="#" tabindex="-1"
+               aria-disabled="true" th:text="#{page.patient.my-record.pagination.previous}"></a>
+        </li>
+        <li class="page-item"><a class="page-link text-white bg-danger badge-dark" href="#">1</a></li>
+        <li class="page-item"><a class="page-link text-white bg-danger badge-dark" href="#">2</a></li>
+        <li class="page-item"><a class="page-link text-white bg-danger badge-dark" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link text-white bg-danger badge-dark" href="#"
+               th:text="#{page.patient.my-record.pagination.next}"></a>
+        </li>
+    </ul>
+</nav>
+<script>
+    $('.btnNext').click(function () {
+        $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+    });
+
+    $('.btnPrevious').click(function () {
+        $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
+    });
+
+    $(function () {
+        $('.example-popover').popover({
+            container: 'body'
+        })
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{page.register.title}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="..\static\css\index.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+<form class="form-regystry">
+    <img src="..\static\img\hospital.png" width="100" height="100">
+    <h1 class="h3 mb-3 font-weight-normal" th:text="#{page.register.header}"></h1>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.name}"></label>
+        <div class="col-6">
+            <input class="form-control" placeholder="First name"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.surname}"></label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Last name"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.birthday}"></label>
+        <div class="col-6">
+            <input class="form-control" type="Date"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.login}"></label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Login"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.email}"></label>
+        <div class="col-6">
+            <input class="form-control" placeholder="E-mail" type="email"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.password}"></label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Password" type="password" id="password1"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.password-repeat}"></label>
+        <div class="col-6">
+            <input class="form-control" placeholder="Password" type="password" id="password2"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-6 col-form-label text-left" th:text="#{}">Ваш статус</label>
+        <div class="col-6">
+            <select class="form-control">
+                <option selected th:text="#{page.register.role.patient}"></option>
+                <option th:text="#{page.register.role.doctor}"></option>
+            </select>
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-ls btn-danger btn-block"
+           th:attr="value=#{page.register.button.register}"/>
+    <p class="mt-5 mb-3 text-muted" th:text="#{page.register.signature}"></p>
+</form>
+
+</body>
+</html>

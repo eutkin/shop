@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 public class RecordController {
@@ -35,6 +37,7 @@ public class RecordController {
         Page<RecordPresentation> myRecords = this.recordService
                 .getMyRecords(user, PageRequest.of(1, this.pageSize));
         modelAndView.addObject("records", myRecords.getContent());
+        modelAndView.addObject("specialities", List.of());
         return modelAndView;
     }
 
