@@ -1,11 +1,14 @@
 package com.github.roman1306.shop.configuration;
 
 import com.github.roman1306.shop.dao.RecordDao;
+import com.github.roman1306.shop.dao.SlotDao;
 import com.github.roman1306.shop.dao.UserDao;
 import com.github.roman1306.shop.dao.impl.JdbcRecordDao;
+import com.github.roman1306.shop.dao.impl.JdbcSlotDao;
 import com.github.roman1306.shop.dao.impl.SqlHolder;
 import com.github.roman1306.shop.dao.impl.JdbcUserDao;
-import com.github.roman1306.shop.presentation.RecordPresentation;
+import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.SlotView;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -26,16 +29,30 @@ public class DaoConfiguration {
     }
 
     @Bean
-    RowMapper<RecordPresentation> recordPresentationRowMapper() {
+    RowMapper<RecordView> recordPresentationRowMapper() {
         return new JdbcRecordDao.RecordRowMapper();
     }
 
     @Bean
-    RecordDao<RecordPresentation> recordDao(
+    RecordDao<RecordView> recordDao(
             @NonNull SqlHolder sqlHolder,
             @NonNull JdbcOperations jdbc,
-            @NonNull RowMapper<RecordPresentation> rowMapper
+            @NonNull RowMapper<RecordView> rowMapper
     ) {
         return new JdbcRecordDao(sqlHolder, jdbc, rowMapper);
+    }
+
+    @Bean
+    RowMapper<SlotView> slotViewRowMapper() {
+        return new JdbcSlotDao.SlotRowMapper();
+    }
+
+    @Bean
+    SlotDao<SlotView> slotDao(
+            @NonNull SqlHolder sqlHolder,
+            @NonNull JdbcOperations jdbc,
+            @NonNull RowMapper<SlotView> rowMapper
+    ) {
+        return new JdbcSlotDao<>(sqlHolder, jdbc, rowMapper);
     }
 }

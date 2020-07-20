@@ -1,17 +1,15 @@
 package com.github.roman1306.shop.dao.impl;
 
 import com.github.roman1306.shop.dao.RecordDao;
-import com.github.roman1306.shop.presentation.RecordPresentation;
-import org.springframework.dao.DataAccessException;
+import com.github.roman1306.shop.presentation.DoctorView;
+import com.github.roman1306.shop.presentation.RecordView;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
@@ -22,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Transactional
-public class JdbcRecordDao implements RecordDao<RecordPresentation> {
+public class JdbcRecordDao implements RecordDao<RecordView> {
 
     @NonNull
     private final SqlHolder sqlHolder;
@@ -31,12 +29,12 @@ public class JdbcRecordDao implements RecordDao<RecordPresentation> {
     private final JdbcOperations jdbc;
 
     @NonNull
-    private final RowMapper<RecordPresentation> rowMapper;
+    private final RowMapper<RecordView> rowMapper;
 
     public JdbcRecordDao(
             @NonNull SqlHolder sqlHolder,
             @NonNull JdbcOperations jdbc,
-            @NonNull RowMapper<RecordPresentation> rowMapper
+            @NonNull RowMapper<RecordView> rowMapper
     ) {
         this.sqlHolder = sqlHolder;
         this.jdbc = jdbc;
@@ -70,7 +68,7 @@ public class JdbcRecordDao implements RecordDao<RecordPresentation> {
     }
 
     @Override
-    public RecordPresentation findById(@NonNull UUID recordId) {
+    public RecordView findById(@NonNull UUID recordId) {
         try {
             return this.jdbc.queryForObject(sql("sql/find-record-by-id.sql"), this.rowMapper);
         } catch (IncorrectResultSizeDataAccessException e) {
@@ -80,12 +78,12 @@ public class JdbcRecordDao implements RecordDao<RecordPresentation> {
 
     @Override
     @NonNull
-    public Page<RecordPresentation> findByUserId(@NonNull String username, @NonNull Pageable pageable) {
+    public Page<RecordView> findByUserId(@NonNull String username, @NonNull Pageable pageable) {
         final String sql = sql("sql/find-records-by-user-id.sql")
                 + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset();
         final String countSql = "select count(*) as id from records";
         final Long total = this.jdbc.queryForObject(countSql, (rs, i) -> rs.getLong("id"));
-        final List<RecordPresentation> records = this.jdbc.query(
+        final List<RecordView> records = this.jdbc.query(
                 sql,
                 this.rowMapper,
                 username,
@@ -100,18 +98,18 @@ public class JdbcRecordDao implements RecordDao<RecordPresentation> {
         return this.sqlHolder.load(path);
     }
 
-    public static class RecordRowMapper implements RowMapper<RecordPresentation> {
+    public static class RecordRowMapper implements RowMapper<RecordView> {
 
         @Override
-        public RecordPresentation mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public RecordView mapRow(ResultSet rs, int rowNum) throws SQLException {
             final Timestamp timestamp = rs.getTimestamp("datetime");
             final String speciality = rs.getString("speciality");
             final String doctorName = rs.getString("doctor_name");
             final String doctorDesc = rs.getString("doctor_desc");
-            return new RecordPresentation()
+            return new RecordView()
                     .setDateTime(timestamp.toLocalDateTime())
                     .setSpeciality(speciality)
-                    .setDoctor(new RecordPresentation.Doctor().setName(doctorName).setDescription(doctorDesc));
+                    .setDoctor(new DoctorView().setName(doctorName).setDescription(doctorDesc));
         }
     }
 }

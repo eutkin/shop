@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="row">
+    <th:block th:each="date : ${slots.keySet()}">
+        <div class="col-md-1" th:with="doctorGroup = ${slots.get(date)}">
+            <th:block th:each="doctor : ${doctorGroup.keySet()}">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img th:src="@{img/defaultAvatar.png}" width="90" height="80", th:alt="${doctor.description}">
+                    </div>
+                    <div class="col-md-10">
+                        <th:block th:each="slot : ${doctorGroup.get(doctor)}">
+                            <button type="button" class="btn btn-danger btn-sm col-margin"
+                                    th:text="${slot.time}">
+                            </button>
+                        </th:block>
+                    </div>
+
+                </div>
+            </th:block>
+        </div>
+    </th:block>
+</div>
+</html>

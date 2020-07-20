@@ -80,44 +80,9 @@
                     </div>
 
                     <div class="tab-pane fade" id="slotTime" role="tabpanel" aria-labelledby="contact-tab">
-
-                        <h2 class="h3 mb-3 font-weight-normal" th:text="#{page.patient.my-record.create.date}"></h2>
-                        <ul class="nav nav-pills nav-fill">
-                            <th:block th:each=" slot : ${slots}">
-                                <li class="nav-item">
-                                    <a class="nav-link text-danger" href="#" th:text="${slot.date}"></a>
-                                </li>
-                            </th:block>
-                        </ul>
-
                         <h2 class="h3 mb-3 font-weight-normal" th:text="#{page.patient.my-record.create.time}"></h2>
                         <div class="container-fluid">
-                            <th:block th:each="doctor : ${doctors}">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4">
-                                        <button type="button" class="example-popover" data-toggle="popover"
-                                                data-trigger="focus"
-                                                th:attr="title=${doctor.name}, data-content=${doctor.description}">
-                                            <img src="static\img\defaultAvatar.png" width="90" height="80">
-                                        </button>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-margin" id="slot-storage">
-                                            <th:block th:each="slot : ${slots}">
-                                                <button type="button" class="btn btn-danger btn-sm col-margin"
-                                                        th:text="${slot.time}">
-                                                </button>
-                                            </th:block>
-                                            <br>
-                                            <th:block th:each="slot : ${slots}">
-                                                <button type="button" class="btn btn-danger btn-sm col-margin"
-                                                        th:text="${slot.time}">
-                                                </button>
-                                            </th:block>
-                                        </div>
-                                    </div>
-                                </div>
-                            </th:block>
+
                         </div>
                     </div>
                 </div>
@@ -150,9 +115,9 @@
     <tbody>
     <th:block th:each="record : ${records}">
         <tr>
-            <td th:text="${record.slot.time}"></td>
-            <td th:text="${record.slot.speciality.name}"></td>
-            <td th:text="${record.slot.doctor.name}"></td>
+            <td th:text="${record.dateTime}"></td>
+            <td th:text="${record.speciality}"></td>
+            <td th:text="${record.doctor.name}"></td>
         </tr>
     </th:block>
     </tbody>

@@ -1,7 +1,7 @@
 package com.github.roman1306.shop.controller.rest;
 
 import com.github.roman1306.shop.entity.User;
-import com.github.roman1306.shop.presentation.RecordPresentation;
+import com.github.roman1306.shop.presentation.RecordView;
 import com.github.roman1306.shop.request.RecordPatientRequest;
 import com.github.roman1306.shop.service.RecordService;
 import org.springframework.data.domain.Page;
@@ -23,14 +23,14 @@ public class RecordRestController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_PATIENT')")
-    RecordPresentation recordPatient(
+    RecordView recordPatient(
             @AuthenticationPrincipal User user,
             @RequestBody RecordPatientRequest request) {
         return recordService.createRecord(request, user);
     }
 
     @GetMapping
-    Page<RecordPresentation> myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
+    Page<RecordView> myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         return recordService.getMyRecords(user, pageable);
     }
 }
