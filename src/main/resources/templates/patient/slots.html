@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="row">
     <th:block th:each="date : ${slots.keySet()}">
-        <div class="col-md-1" th:with="doctorGroup = ${slots.get(date)}">
+        <div class="col-md-12" th:with="doctorGroup = ${slots.get(date)}">
             <th:block th:each="doctor : ${doctorGroup.keySet()}">
                 <div class="row">
                     <div class="col-md-2">
@@ -10,8 +10,11 @@
                     </div>
                     <div class="col-md-10">
                         <th:block th:each="slot : ${doctorGroup.get(doctor)}">
-                            <button type="button" class="btn btn-danger btn-sm col-margin"
-                                    th:text="${slot.time}">
+                            <button type="button" class="btn btn-danger btn-sm col-margin record-btn"
+                                    th:text="${#temporals.format(slot.time, 'HH:mm')}"
+                                    th:attr="slotId = ${slot.id}"
+                                    th:disabled="${!slot.available}"
+                            >
                             </button>
                         </th:block>
                     </div>

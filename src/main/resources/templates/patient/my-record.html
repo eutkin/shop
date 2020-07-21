@@ -2,19 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <title th:text="#{page.patient.my-record.title}"></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../static/css/product.css">
+
+    <link th:rel="stylesheet" type="text/css"
+          th:href="@{assets/select2-bootstrap4-theme-master/dist/select2-bootstrap4.css}"/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css} "/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{css/product.css}">
 </head>
 
 <body>
@@ -57,31 +54,31 @@
 
                     <div class="tab-pane fade show active" id="speciality" role="tabpanel" aria-labelledby="home-tab">
                         <div class="list-group list-group-flush">
-                            <h2 class="h3 mb-3 font-weight-normal"
-                                th:text="#{page.patient.my-record.create.choice-speciality}"></h2>
-                            <th:block th:each=" speciality : ${specialities}">
-                                <button type="button" class="list-group-item list-group-item-action"
-                                        th:text="${speciality.name}">
-                                </button>
-                            </th:block>
+                            <label class="h3 mb-3 font-weight-normal" for="select-speciality"
+                                   th:text="#{page.patient.my-record.create.choice-speciality}"></label>
+                            <select id="select-speciality" class="select2-single">
+                                <th:block th:each=" speciality : ${specialities}">
+                                    <option th:value="${speciality.id}" th:text="${speciality.name}"></option>
+                                </th:block>
+                            </select>
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="department" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="list-group list-group-flush">
-                            <h2 class="h3 mb-3 font-weight-normal"
-                                th:text="#{page.patient.my-record.create.choice-department}"></h2>
-                            <th:block th:each="department : ${departments}">
-                                <button type="button" class="list-group-item list-group-item-action"
-                                        th:text="${department.name}">
-                                </button>
-                            </th:block>
+                            <label class="h3 mb-3 font-weight-normal" for="select-department"
+                                   th:text="#{page.patient.my-record.create.choice-department}"></label>
+                            <select id="select-department" class="select2-single">
+                                <th:block th:each="department : ${departments}">
+                                    <option th:value="${department.id}" th:text="${department.name}"></option>
+                                </th:block>
+                            </select>
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="slotTime" role="tabpanel" aria-labelledby="contact-tab">
                         <h2 class="h3 mb-3 font-weight-normal" th:text="#{page.patient.my-record.create.time}"></h2>
-                        <div class="container-fluid">
+                        <div class="container-fluid" id="slot-container">
 
                         </div>
                     </div>
@@ -112,14 +109,12 @@
         <th scope="col" th:text="#{page.patient.my-record.records.doctor}"></th>
     </tr>
     </thead>
-    <tbody>
-    <th:block th:each="record : ${records}">
-        <tr>
+    <tbody id="record-table">
+        <tr th:each="record : ${records.getContent()}">
             <td th:text="${record.dateTime}"></td>
             <td th:text="${record.speciality}"></td>
             <td th:text="${record.doctor.name}"></td>
         </tr>
-    </th:block>
     </tbody>
 </table>
 
@@ -138,6 +133,10 @@
         </li>
     </ul>
 </nav>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
+<script th:src="@{/webjars/popper.js/2.0.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/select2-develop/dist/js/select2.full.js}"></script>
 <script>
     $('.btnNext').click(function () {
         $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
@@ -154,6 +153,6 @@
     })
 
 </script>
-
+<script th:src="@{js/record.js}"></script>
 </body>
 </html>

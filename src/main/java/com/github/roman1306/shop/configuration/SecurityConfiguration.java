@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +17,7 @@ import java.util.Objects;
 
 @SpringBootConfiguration
 @Import({DaoConfiguration.class})
-public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,6 +31,14 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").authenticated();
     }
 
+    @Override
+    public void configure(WebSecurity web) {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**", "/webjars/**");
+    }
+
+
     private final UserDao userDao;
 
     public SecurityConfiguration(@NonNull UserDao userDao) {
@@ -37,7 +46,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public UserDetailsService userDetailsService()  {
+    public UserDetailsService userDetailsService() {
         return this.userDao;
     }
 

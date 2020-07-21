@@ -44,10 +44,10 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
     @Override
     public Optional<UUID> findPatientIdByUserId(String userId) {
         try {
-            UUID patientId = jdbc.queryForObject(sql("sql/find-patient-by-user-id.sql"), (rs, i) -> {
+            UUID patientId = this.jdbc.queryForObject(sql("sql/find-patient-by-user-id.sql"), (rs, i) -> {
                 String raw = rs.getString(1);
                 return UUID.fromString(raw);
-            });
+            }, userId);
             return Optional.ofNullable(patientId);
         } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
@@ -57,20 +57,21 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
     @Override
     public UUID bookSlot(@NonNull UUID slotId, @NonNull UUID patientId) {
         UUID recordId = UUID.randomUUID();
-        this.jdbc.update(sql("sql/book-slot.sql"), recordId, slotId, patientId);
+        this.jdbc.update(sql("sql/book-slot.sql"), recordId, patientId, slotId);
         return recordId;
     }
 
     @Override
     public boolean busySlot(@NonNull UUID slotId) {
         //noinspection ConstantConditions Result::next dont return nullable value
-        return this.jdbc.query(sql("sql/check-slot.sql"), ResultSet::next);
+        return this.jdbc.query(sql("sql/check-slot.sql"), ResultSet::next, slotId);
     }
 
     @Override
     public RecordView findById(@NonNull UUID recordId) {
         try {
-            return this.jdbc.queryForObject(sql("sql/find-record-by-id.sql"), this.rowMapper);
+            return this.jdbc
+                    .queryForObject(sql("sql/find-record-by-id.sql"), this.rowMapper, recordId);
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;
         }
@@ -88,7 +89,7 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
                 this.rowMapper,
                 username
         );
-        return new PageImpl<>(records, pageable, total);
+        return new PageImpl<>(records, pageable, total == null ? 0 : total);
     }
 
     @NonNull

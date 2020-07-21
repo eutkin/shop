@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("${spring.application.api-prefix:}/record")
 public class RecordRestController {
 
+    @NonNull
     private final RecordService recordService;
 
     public RecordRestController(@NonNull RecordService recordService) {
@@ -22,15 +23,15 @@ public class RecordRestController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    @PreAuthorize("hasRole('PATIENT')")
     RecordView recordPatient(
             @AuthenticationPrincipal User user,
             @RequestBody RecordPatientRequest request) {
-        return recordService.createRecord(request, user);
+        return this.recordService.createRecord(request, user);
     }
 
     @GetMapping
     Page<RecordView> myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
-        return recordService.getMyRecords(user, pageable);
+        return this.recordService.getMyRecords(user, pageable);
     }
 }

@@ -15,4 +15,6 @@ public class SlotView {
     private LocalDateTime time;
 
     private DoctorView doctor;
+
+    private boolean available;
 }

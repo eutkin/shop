@@ -7,7 +7,7 @@ import com.github.roman1306.shop.presentation.SlotView;
 import com.github.roman1306.shop.service.ContentProvider;
 import com.github.roman1306.shop.service.RecordService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,12 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 @Controller
 @RequestMapping("/")
@@ -36,25 +33,26 @@ public class RecordController {
     @NonNull
     private final ContentProvider contentProvider;
 
-    private int pageSize = 20;
-
-    public RecordController(@NonNull RecordService recordService, @NonNull ContentProvider contentProvider) {
+    public RecordController(
+            @NonNull RecordService recordService,
+            @NonNull ContentProvider contentProvider
+    ) {
         this.recordService = recordService;
         this.contentProvider = contentProvider;
     }
 
     @GetMapping
-    ModelAndView myRecords(@AuthenticationPrincipal User user) {
+    ModelAndView myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         final var modelAndView = new ModelAndView("patient/my-record");
         Page<RecordView> myRecords = this.recordService
-                .getMyRecords(user, PageRequest.of(1, this.pageSize));
-        modelAndView.addObject("records", myRecords.getContent());
+                .getMyRecords(user, pageable);
+        modelAndView.addObject("records", myRecords);
         modelAndView.addObject("specialities", this.contentProvider.specialities());
         modelAndView.addObject("departments", this.contentProvider.departments());
         return modelAndView;
     }
 
-    @GetMapping("/{specialityId}/{departmentId}")
+    @GetMapping("/slots/{specialityId}/{departmentId}")
     ModelAndView slots(@PathVariable UUID specialityId, @PathVariable UUID departmentId) {
         final var modelAndView = new ModelAndView("patient/slots");
         final List<SlotView> slots = this.recordService.getAvailableSlots(specialityId, departmentId);
@@ -66,10 +64,6 @@ public class RecordController {
         modelAndView.addObject("slots", slotsByDateAndDoctor);
 
         return modelAndView;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
     }
 
 }

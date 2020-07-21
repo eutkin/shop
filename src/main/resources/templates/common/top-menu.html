@@ -27,8 +27,8 @@
             </ul>
             <form class="form-inline">
                 <span class="navbar-text text-dark" sec:authentication="name"></span>
-                <button class="btn btn-dark my-2 my-sm-0 button-margin" type="submit"
-                        th:text="#{common.menu.logout}"></button>
+                <a class="btn btn-dark my-2 my-sm-0 button-margin" type="submit"
+                        th:text="#{common.menu.logout}" th:href="@{/logout}"></a>
             </form>
         </div>
     </nav>
