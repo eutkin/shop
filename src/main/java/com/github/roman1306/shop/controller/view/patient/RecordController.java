@@ -1,47 +1,75 @@
 package com.github.roman1306.shop.controller.view.patient;
 
 import com.github.roman1306.shop.entity.User;
-import com.github.roman1306.shop.presentation.RecordPresentation;
-import com.github.roman1306.shop.request.RecordPatientRequest;
+import com.github.roman1306.shop.presentation.DoctorView;
+import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.SlotView;
+import com.github.roman1306.shop.service.ContentProvider;
 import com.github.roman1306.shop.service.RecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.NonNull;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Controller
 @RequestMapping("/")
 public class RecordController {
 
+    @NonNull
     private final RecordService recordService;
+
+    @NonNull
+    private final ContentProvider contentProvider;
+
     private int pageSize = 20;
 
-    public RecordController(@NonNull RecordService recordService) {
+    public RecordController(@NonNull RecordService recordService, @NonNull ContentProvider contentProvider) {
         this.recordService = recordService;
+        this.contentProvider = contentProvider;
     }
 
     @GetMapping
     ModelAndView myRecords(@AuthenticationPrincipal User user) {
-        ModelAndView modelAndView = new ModelAndView("patient/my-record");
-        Page<RecordPresentation> myRecords = this.recordService
+        final var modelAndView = new ModelAndView("patient/my-record");
+        Page<RecordView> myRecords = this.recordService
                 .getMyRecords(user, PageRequest.of(1, this.pageSize));
         modelAndView.addObject("records", myRecords.getContent());
-        modelAndView.addObject("specialities", List.of());
+        modelAndView.addObject("specialities", this.contentProvider.specialities());
+        modelAndView.addObject("departments", this.contentProvider.departments());
+        return modelAndView;
+    }
+
+    @GetMapping("/{specialityId}/{departmentId}")
+    ModelAndView slots(@PathVariable UUID specialityId, @PathVariable UUID departmentId) {
+        final var modelAndView = new ModelAndView("patient/slots");
+        final List<SlotView> slots = this.recordService.getAvailableSlots(specialityId, departmentId);
+
+        final Map<LocalDate, Map<DoctorView, List<SlotView>>> slotsByDateAndDoctor = slots
+                .stream()
+                .collect(groupingBy(slot -> slot.getTime().toLocalDate(),
+                        groupingBy(SlotView::getDoctor)));
+        modelAndView.addObject("slots", slotsByDateAndDoctor);
+
         return modelAndView;
     }
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
+
 }

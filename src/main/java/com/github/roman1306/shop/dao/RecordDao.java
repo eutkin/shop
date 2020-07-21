@@ -1,14 +1,14 @@
 package com.github.roman1306.shop.dao;
 
-import com.github.roman1306.shop.presentation.RecordPresentation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface RecordDao {
+public interface RecordDao<R> {
 
     Optional<UUID> findPatientIdByUserId(@NonNull String userId);
 
@@ -27,11 +27,11 @@ public interface RecordDao {
      * @param slotId идентификатор слота
      * @return {@literal true} если слот занят, иначе {@literal false}
      */
-    boolean checkSlot(@NonNull UUID slotId);
+    boolean busySlot(@NonNull UUID slotId);
+
+    @Nullable
+    R findById(@NonNull UUID recordId);
 
     @NonNull
-    RecordPresentation findById(UUID recordId);
-
-    @NonNull
-    Page<RecordPresentation> findByUserId(@NonNull String username, @NonNull Pageable pageable);
+    Page<R> findByUserId(@NonNull String username, @NonNull Pageable pageable);
 }

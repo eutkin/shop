@@ -11,8 +11,7 @@
     <groupId>com.github.roman1306</groupId>
     <artifactId>registry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shop</name>
-    <description></description>
+    <name>Hospital Registry Online</name>
 
     <properties>
         <java.version>11</java.version>

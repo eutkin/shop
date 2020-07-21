@@ -164,6 +164,13 @@ databaseChangeLog:
             remarks: Запись пациента
             columns:
               - column:
+                 name: record_id
+                 type: UUID
+                 remarks: Идентификатор записи пациента
+                 constraints:
+                   primaryKey: true
+                   nullable: false
+              - column:
                   name: patient_id
                   type: UUID
                   remarks: Идентификатор пациента, записанного на прием на данный слот. Если значение 'null', то слот свободен

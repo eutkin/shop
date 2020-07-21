@@ -14,21 +14,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../static/css/product.css">
+    <link rel="stylesheet" th:href="@{css/product.css}">
 </head>
 <body>
 <header th:insert="common/top-menu.html :: menu"></header>
 
-<ul class="list-unstyled">
-    <th:block th:each="department : ${departments}">
-        <li class="media my-4">
-            <img src="../../static/img/department.jpg" class="mr-3" width="150" height="150">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1" th:text="${department.name}"></h5>
-                <p th:text="${department.adress}"><p>
-            </div>
-        </li>
-    </th:block>
+<ul class="list-unstyled" th:each="department : ${departments}">
+    <li class="media my-4">
+        <img th:src="@{img/department.jpg}" class="mr-3" width="150" height="150">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1" th:text="${department.name}"></h5>
+            <p th:text="${department.address}">
+            <p>
+        </div>
+    </li>
 </ul>
 
 </body>

@@ -7,16 +7,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class RecordPresentation {
+public class RecordView {
 
     private LocalDateTime dateTime;
     private String speciality;
-    private Doctor doctor;
+    private DoctorView doctor;
 
-    @Data
-    @Accessors(chain = true)
-    public static class Doctor {
-        private String name;
-        private String description;
-    }
 }
