@@ -1,0 +1,4 @@
+INSERT INTO public.departments (department_id, name, address) VALUES ('f5e6f0b6-0edf-452a-a3b7-74621454f1e9', 'Центральное отделение', 'Пушкинская д.165 тел 25-89-36');
+INSERT INTO public.departments (department_id, name, address) VALUES ('15351305-44a9-4083-895d-96a1ec019069', 'Операционное отделение', 'Кирова д.56 тел 79-87-54');
+INSERT INTO public.departments (department_id, name, address) VALUES ('5558cc91-a04e-4cab-b413-202fcb97ae4d', 'Детское отделение', 'Ленина 87 тел 46-58-11');
+INSERT INTO public.departments (department_id, name, address) VALUES ('b821b42d-e99e-4b84-b6f0-ca8198f1fe87', 'Стационар', 'Воткинское шоссе 197 тел 23-89-45');

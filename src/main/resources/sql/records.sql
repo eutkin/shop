@@ -1,0 +1,4 @@
+INSERT INTO public.records (record_id, patient_id, slot_id) VALUES ('0778c6ce-ea53-4437-b626-acb1733bc9ac', '4c457ee3-4221-4838-b7a2-7d333da0c5fa', 'ce1d620e-3a85-492f-b9bf-9661c479a767');
+INSERT INTO public.records (record_id, patient_id, slot_id) VALUES ('983f7f1e-2d6e-4977-aac7-807eb7727f64', '1e3bc0a2-6806-4fee-8c96-1b10cbe22a2c', 'f711c752-cf3a-402a-bd07-bdf8310587e2');
+INSERT INTO public.records (record_id, patient_id, slot_id) VALUES ('9c80b0d7-24d5-4fd6-9cdb-ce4fcb0ffe68', 'b943e267-caf3-4e8c-865d-c13623540fb3', '686e75ae-1a4c-4bd1-8f26-37e239fb4a98');
+INSERT INTO public.records (record_id, patient_id, slot_id) VALUES ('c911ac73-a769-4e27-a76f-5e996d543f30', 'ac6ae526-9199-4146-b83f-d06aa4978a59', 'af0e9a5f-953a-476b-915e-b55b35f088ee');
