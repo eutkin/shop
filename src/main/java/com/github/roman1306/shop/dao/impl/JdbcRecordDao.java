@@ -86,9 +86,7 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
         final List<RecordView> records = this.jdbc.query(
                 sql,
                 this.rowMapper,
-                username,
-                pageable.getPageSize(),
-                pageable.getOffset()
+                username
         );
         return new PageImpl<>(records, pageable, total);
     }
