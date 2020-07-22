@@ -3,6 +3,7 @@ package com.github.roman1306.shop.service;
 import com.github.roman1306.shop.dao.DictionaryDao;
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.DepartmentView;
+import com.github.roman1306.shop.presentation.DoctorView;
 import com.github.roman1306.shop.presentation.SpecialityView;
 import com.github.roman1306.shop.service.spi.ContentProvider;
 import com.github.roman1306.shop.service.spi.RecordRoleBasedStrategy;
@@ -24,15 +25,20 @@ public class DefaultContentProvider implements ContentProvider {
     private final DictionaryDao<SpecialityView> specialities;
 
     @NonNull
+    private final DictionaryDao<DoctorView> doctors;
+
+    @NonNull
     private final Collection<RecordRoleBasedStrategy<?>> records;
 
     public DefaultContentProvider(
             @NonNull DictionaryDao<DepartmentView> departments,
             @NonNull DictionaryDao<SpecialityView> specialities,
+            @NonNull DictionaryDao<DoctorView> doctors,
             @NonNull Collection<RecordRoleBasedStrategy<?>> records
     ) {
         this.departments = departments;
         this.specialities = specialities;
+        this.doctors = doctors;
         this.records = records;
     }
 
@@ -45,6 +51,11 @@ public class DefaultContentProvider implements ContentProvider {
     @Override
     public List<DepartmentView> departments() {
         return this.departments.load();
+    }
+
+    @Override
+    public List<DoctorView> doctors() {
+        return this.doctors.load();
     }
 
     @Override
