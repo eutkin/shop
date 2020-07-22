@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{page.welcome.title}"></title>
+    <link th:rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css} "/>
+    <link th:href="@{css/index.css}" rel="stylesheet" type="text/css">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body class="text-center">
+
+<form class="form-signin">
+    <img th:src="@{img/hospital.png}" width="100" height="100">
+    <h1 class="h3 mb-3 font-weight-normal" th:text="#{page.welcome.header}"></h1>
+    <input th:placeholder="#{page.register.field.login}" class="form-control" type="email"/>
+    <input th:placeholder="#{page.register.field.password}" class="form-control" type="password"/>
+    <button type="submit" class="btn btn-lg btn-danger btn-block" th:text="#{page.welcome.btn-enter}"></button>
+    <button id="register-btn" type="button" class="btn btn-ls btn-secondary btn-block"
+            th:text="#{page.welcome.btn-reg}"></button>
+    <p class="mt-5 mb-3 text-muted" th:text="#{page.welcome.signature}"></p>
+
+</form>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
+<script th:src="@{/webjars/popper.js/2.0.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+<script>
+    $('#register-btn').click(function () {
+        $(location).attr('href', '/register');
+    })
+</script>
+</body>
+</html>

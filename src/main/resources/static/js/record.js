@@ -4,7 +4,7 @@ $(document).ready(function () {
     let token = $("meta[name='_csrf']").attr("content");
     let header = $("meta[name='_csrf_header']").attr("content")
 
-    $('#slotTime-tab').on('shown.bs.tab', function (e){
+    $('#slotTime-tab').on('shown.bs.tab', function (e) {
         let specialityId = $('#select-speciality').val()
         let departmentId = $('#select-department').val()
         $.get('/slots/' + specialityId + '/' + departmentId, function (data) {
@@ -24,10 +24,13 @@ $(document).ready(function () {
                     success: function (data) {
                         $('#speciality-tab').tab('show')
                         $('#recordModal').modal('hide')
-                        $('#record-table').append(
-                            '<tr><td>'+ data.dateTime + '</td><td></td><td>'+
-                            data.speciality+'</td><td>'+data.doctor.name+'</td></tr>'
-                        )
+                        let rowCount = $('#record-table tr').length;
+                        if (rowCount < 20) {
+                            $('#record-table').append(
+                                '<tr><td>' + data.dateTime + '</td><td>' +
+                                data.speciality + '</td><td>' + data.doctor.name + '</td></tr>'
+                            )
+                        }
                         $('#slot-container').empty()
 
                     },

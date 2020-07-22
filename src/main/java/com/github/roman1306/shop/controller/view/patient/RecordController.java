@@ -24,7 +24,7 @@ import java.util.UUID;
 import static java.util.stream.Collectors.groupingBy;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping({"/", "/records"})
 public class RecordController {
 
     @NonNull
@@ -49,6 +49,7 @@ public class RecordController {
         modelAndView.addObject("records", myRecords);
         modelAndView.addObject("specialities", this.contentProvider.specialities());
         modelAndView.addObject("departments", this.contentProvider.departments());
+
         return modelAndView;
     }
 

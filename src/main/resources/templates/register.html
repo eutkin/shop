@@ -3,80 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{page.register.title}"></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="..\static\css\index.css" rel="stylesheet">
+    <link th:rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css} "/>
+    <link th:href="@{css/index.css}" rel="stylesheet" type="text/css">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body class="text-center">
 
-<form class="form-regystry">
-    <img src="..\static\img\hospital.png" width="100" height="100">
+<form class="form-regystry" method="POST" th:action="@{/register}">
+    <img th:src="@{img/hospital.png}" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{page.register.header}"></h1>
 
     <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.name}"></label>
         <div class="col-6">
-            <input class="form-control" placeholder="First name"/>
+            <input name="name" class="form-control" th:placeholder="#{page.register.field.name}"/>
+        </div>
+        <div class="col-6">
+            <small id="nameHelp" class="text-danger">
+            </small>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.surname}"></label>
         <div class="col-6">
-            <input class="form-control" placeholder="Last name"/>
+            <input name="surname" class="form-control" th:placeholder="#{page.register.field.surname}"/>
+        </div>
+        <div class="col-6">
+            <small id="surnameHelp" class="text-danger">
+            </small>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.birthday}"></label>
         <div class="col-6">
-            <input class="form-control" type="Date"/>
+            <input name="birthDate" class="form-control" type="date" th:placeholder="#{page.register.field.birthday}"/>
+        </div>
+        <div class="col-6">
+            <small id="birthDateHelp" class="text-danger">
+            </small>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.login}"></label>
         <div class="col-6">
-            <input class="form-control" placeholder="Login"/>
+            <input name="username" class="form-control" th:placeholder="#{page.register.field.login}"/>
+        </div>
+        <div class="col-6">
+            <small id="usernameHelp" class="text-danger">
+            </small>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-6">
+            <input name="password" class="form-control" th:placeholder="#{page.register.field.password}"
+                   type="password" id="password1" data-dismiss="alert"/>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.email}"></label>
         <div class="col-6">
-            <input class="form-control" placeholder="E-mail" type="email"/>
+            <input class="form-control" th:placeholder="#{page.register.field.password-repeat}" type="password"
+                   id="password2" data-dismiss="alert"/>
+        </div>
+        <div class="col-6">
+            <small id="passwordHelp" class="text-danger" th:text="#{page.register.error.password}">
+            </small>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.password}"></label>
         <div class="col-6">
-            <input class="form-control" placeholder="Password" type="password" id="password1"/>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{page.register.field.password-repeat}"></label>
-        <div class="col-6">
-            <input class="form-control" placeholder="Password" type="password" id="password2"/>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-6 col-form-label text-left" th:text="#{}">Ваш статус</label>
-        <div class="col-6">
-            <select class="form-control">
-                <option selected th:text="#{page.register.role.patient}"></option>
-                <option th:text="#{page.register.role.doctor}"></option>
+            <select class="form-control" name="roles">
+                <option disabled selected th:text="#{page.register.field.role}"></option>
+                <option th:each="role : ${roles}" th:text="#{'roles.' + ${role.name}}" th:value="${role.name}"></option>
             </select>
         </div>
+        <div class="col-6">
+            <small id="rolesHelp" class="text-danger">
+            </small>
+        </div>
     </div>
 
-    <input type="submit" class="btn btn-ls btn-danger btn-block"
+    <input id="register-btn" type="submit" class="btn btn-ls btn-danger btn-block"
            th:attr="value=#{page.register.button.register}"/>
     <p class="mt-5 mb-3 text-muted" th:text="#{page.register.signature}"></p>
 </form>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
+<script th:src="@{/webjars/popper.js/2.0.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+<script>
+    $(document).ready(function () {
+        $(".text-danger").hide()
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content")
 
+        $('#register-btn').click(function (event) {
+            let $password1 = $('#password1');
+            let $password2 = $('#password2');
+            let $passwordHelp = $('#passwordHelp');
+            event.preventDefault()
+
+            let pass1 = $password1.val();
+            let pass2 = $password2.val();
+            if (pass1 !== pass2) {
+                $password1.alert()
+                $password2.alert()
+                $passwordHelp.show()
+            } else {
+                $passwordHelp.hide()
+                let headers = {}
+                headers[header] = token
+                $.ajax({
+                    url: '/register',
+                    data: JSON.stringify({
+                        username: $("[name='username']").val(),
+                        name: $("[name='name']").val(),
+                        surname: $("[name='surname']").val(),
+                        birthDate: $("[name='birthDate']").val(),
+                        password: pass1,
+                        roles: [{
+                            name: $("[name='roles']").val()
+                        }]
+                    }),
+                    headers: headers,
+                    contentType: 'application/json',
+                    method: 'POST',
+                    success: function () {
+                        $(location).attr('href', '/');
+                    },
+                    statusCode: {
+                        400: function (data) {
+                            let errors = data.responseJSON;
+                            Object.keys(errors).forEach(name => {
+                                $(".text-danger").hide()
+                                $(".form-control").removeClass('form-control-danger')
+                                $("[name='" + name + "']").addClass('form-control-danger')
+                                let helper = $("#" + name + "Help");
+                                helper.text(errors[name])
+                                helper.show()
+                            })
+                        },
+                        200: function () {
+                            $(".form-control").removeClass('form-control-danger')
+                            $(".text-danger").hide()
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>
 </body>
 </html>

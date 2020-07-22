@@ -82,8 +82,8 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
     public Page<RecordView> findByUserId(@NonNull String username, @NonNull Pageable pageable) {
         final String sql = sql("sql/find-records-by-user-id.sql")
                 + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset();
-        final String countSql = "select count(*) as id from records";
-        final Long total = this.jdbc.queryForObject(countSql, (rs, i) -> rs.getLong("id"));
+        final String countSql = sql("sql/count-records.sql");
+        final Long total = this.jdbc.queryForObject(countSql, (rs, i) -> rs.getLong("id"), username);
         final List<RecordView> records = this.jdbc.query(
                 sql,
                 this.rowMapper,

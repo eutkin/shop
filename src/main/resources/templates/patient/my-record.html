@@ -110,26 +110,35 @@
     </tr>
     </thead>
     <tbody id="record-table">
-        <tr th:each="record : ${records.getContent()}">
-            <td th:text="${record.dateTime}"></td>
-            <td th:text="${record.speciality}"></td>
-            <td th:text="${record.doctor.name}"></td>
-        </tr>
+    <tr th:each="record : ${records.getContent()}">
+        <td th:text="${#temporals.format(record.dateTime,'dd MMMM yyyy HH:mm')}"></td>
+        <td th:text="${record.speciality}"></td>
+        <td th:text="${record.doctor.name}"></td>
+    </tr>
     </tbody>
 </table>
 
-<nav>
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link text-white bg-danger badge-dark" href="#" tabindex="-1"
-               aria-disabled="true" th:text="#{page.patient.my-record.pagination.previous}"></a>
+<nav aria-label="Pagination" th:if="${!records.isEmpty()}">
+    <ul class="pagination">
+        <li th:classappend="${!records.hasPrevious()} ? disabled" class="page-item">
+            <a class="page-link" th:unless="${records.hasPrevious()}">&laquo;</a>
+            <a class="page-link"
+               th:if="${records.hasPrevious()}"
+               th:with="pr = ${records.previousPageable()}"
+               th:href="@{/(page=${pr.getPageNumber()}, pageSize=${pr.getPageSize()})}">&laquo;</a>
         </li>
-        <li class="page-item"><a class="page-link text-white bg-danger badge-dark" href="#">1</a></li>
-        <li class="page-item"><a class="page-link text-white bg-danger badge-dark" href="#">2</a></li>
-        <li class="page-item"><a class="page-link text-white bg-danger badge-dark" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link text-white bg-danger badge-dark" href="#"
-               th:text="#{page.patient.my-record.pagination.next}"></a>
+        <li th:classappend="${records.number == (page - 1)} ? 'active pointer-disabled'"
+            class="page-item"
+            th:each="page : ${#numbers.sequence(1, records.totalPages )}">
+            <a class="page-link" th:href="@{/(page=${page - 1}, pageSize=${records.getSize()})}"
+               th:text="${page}"></a>
+        </li>
+        <li th:classappend="${!records.hasNext()} ? disabled" class="page-item">
+            <a class="page-link" th:unless="${records.hasNext()}">&raquo;</a>
+            <a class="page-link"
+               th:if="${records.hasNext()}"
+               th:with="next = ${records.nextPageable()}"
+               th:href="@{/(page=${next.getPageNumber()}, pageSize=${next.getPageSize()})}">&raquo;</a>
         </li>
     </ul>
 </nav>

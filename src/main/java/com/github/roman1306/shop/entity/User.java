@@ -1,18 +1,42 @@
 package com.github.roman1306.shop.entity;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@Accessors(chain = true)
+@FieldNameConstants
 public class User implements UserDetails {
 
-    private String name;
+    @Length(min = 5, message = "validation.user.username.length")
+    private String username;
 
+    @Length(min = 6, message = "validation.user.password.length")
     private String password;
 
+    @NotNull(message = "validation.user.birth-date.not-null")
+    private LocalDate birthDate;
+
+    @NotBlank(message = "validation.user.name.not-blank")
+    private String name;
+
+    @NotBlank(message = "validation.user.surname.not-blank")
+    private String surname;
+
+    @NotEmpty(message = "validation.user.roles.not-empty")
     private Set<Role> roles = new HashSet<>();
 
     @Override
@@ -27,7 +51,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.name;
+        return this.username;
     }
 
     @Override
@@ -48,33 +72,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public User setRoles(Set<Role> roles) {
-        this.roles = roles;
-        return this;
-    }
-
-    public User addRole(Role role) {
-        this.roles.add(role);
-        return this;
     }
 }
