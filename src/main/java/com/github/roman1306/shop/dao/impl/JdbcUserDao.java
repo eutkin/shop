@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Transactional
@@ -39,7 +40,7 @@ public class JdbcUserDao implements UserDao {
             String password = rs.getString("password");
             String role = rs.getString("role");
             userHolder.compareAndSet(null, new User());
-            return userHolder.updateAndGet(user -> user.setName(name)
+            return userHolder.updateAndGet(user -> user.setUsername(name)
                     .setPassword(password)
                     .setRoles(Set.of(new Role().setName(role))));
         }, username);
@@ -52,10 +53,19 @@ public class JdbcUserDao implements UserDao {
     public User createUser(User user) {
         String userSql = this.sqlHolder.load("sql/create-user.sql");
         String userRoleSql = this.sqlHolder.load("sql/create-user-role.sql");
-        this.jdbc.update(userSql, user.getUsername(), user.getPassword());
+        final String roleSql = this.sqlHolder
+                .load("sql/create-" + (user.isDoctor() ? "doctor" : "patient") + ".sql");
+        this.jdbc.update(userSql,
+                user.getUsername(),
+                user.getName(),
+                user.getSurname(),
+                user.getBirthDate(),
+                user.getPassword()
+        );
         for (GrantedAuthority role : user.getAuthorities()) {
             this.jdbc.update(userRoleSql, user.getUsername(), role.getAuthority());
         }
+        this.jdbc.update(roleSql, UUID.randomUUID().toString(), user.getUsername());
         return user;
     }
 

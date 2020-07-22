@@ -1,5 +1,6 @@
 package com.github.roman1306.shop.configuration;
 
+import com.github.roman1306.shop.dao.PatientRecordDao;
 import com.github.roman1306.shop.dao.RecordDao;
 import com.github.roman1306.shop.dao.SlotDao;
 import com.github.roman1306.shop.dao.UserDao;
@@ -34,7 +35,7 @@ public class DaoConfiguration {
     }
 
     @Bean
-    RecordDao<PatientRecordView> recordDao(
+    PatientRecordDao<PatientRecordView> recordDao(
             @NonNull SqlHolder sqlHolder,
             @NonNull JdbcOperations jdbc,
             @NonNull RowMapper<PatientRecordView> rowMapper

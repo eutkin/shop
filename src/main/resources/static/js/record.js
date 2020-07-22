@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('#slotTime-tab').on('shown.bs.tab', function (e) {
         let specialityId = $('#select-speciality').val()
         let departmentId = $('#select-department').val()
-        $.get('/patient/slots/' + specialityId + '/' + departmentId, function (data) {
+        $.get('/slots/' + specialityId + '/' + departmentId, function (data) {
             $('#slot-container').append(data)
             $('.record-btn').click(function (event) {
                 let $btn = $(event.target)

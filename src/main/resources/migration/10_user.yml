@@ -58,7 +58,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_user_roles_user
-                    references: users(name)
+                    references: users(username)
               - column:
                   name: role
                   type: varchar(50)

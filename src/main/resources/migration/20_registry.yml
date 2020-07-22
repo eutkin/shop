@@ -65,7 +65,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_doctors_user_id
-                    references: users(name)
+                    references: users(username)
         - createTable:
             tableName: doctor_specialities
             remarks: Специальности врачей
@@ -105,7 +105,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_patients_user_id
-                    references: users(name)
+                    references: users(username)
         - createTable:
             tableName: doctor_slots
             remarks: Временные и географические слоты врачей (в каком отделение и в какое время врач принимает)

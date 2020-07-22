@@ -7,6 +7,7 @@ import com.github.roman1306.shop.exception.UserAlreadyExistsException;
 import com.github.roman1306.shop.service.spi.UserService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @NonNull
+    @Transactional
     public User register(User user) {
         final User existsUser = this.userDao.loadUserByUsername(user.getUsername());
         if (existsUser != null) {

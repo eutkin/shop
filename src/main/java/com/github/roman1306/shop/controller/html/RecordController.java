@@ -45,7 +45,7 @@ public class RecordController {
     @GetMapping
     ModelAndView myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         final var subdir = user.isPatient() ? "patient" : "doctor";
-        final var modelAndView = new ModelAndView(String.join("/", subdir, "my-records"));
+        final var modelAndView = new ModelAndView(String.join("/", subdir, "my-record"));
         final Page<?> records = this.contentProvider.records(user, pageable);
         modelAndView.addObject("records", records);
         modelAndView.addObject("specialities", this.contentProvider.specialities());

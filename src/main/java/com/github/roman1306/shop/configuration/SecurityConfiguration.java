@@ -37,14 +37,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/register").permitAll()
-                .antMatchers("/").authenticated();
+                .antMatchers("/**").authenticated();
     }
 
     @Override
     public void configure(WebSecurity web) {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/webjars/**");
+                .antMatchers("/resources/**", "/static/**", "/webjars/**", "/img/**", "/css/**", "/js/**");
     }
 
 
