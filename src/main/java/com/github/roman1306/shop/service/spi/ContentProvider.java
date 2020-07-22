@@ -2,6 +2,7 @@ package com.github.roman1306.shop.service.spi;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.DepartmentView;
+import com.github.roman1306.shop.presentation.DoctorView;
 import com.github.roman1306.shop.presentation.SpecialityView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,9 @@ public interface ContentProvider {
 
     @NonNull
     List<DepartmentView> departments();
+
+    @NonNull
+    List<DoctorView> doctors();
 
     @NonNull
     Page<?> records(@NonNull User user, @NonNull Pageable pageable);
