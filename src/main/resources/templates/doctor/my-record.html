@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <title th:text="#{page.doctor.my-record.title}"></title>
+
+    <link th:rel="stylesheet" type="text/css"
+          th:href="@{assets/select2-bootstrap4-theme-master/dist/select2-bootstrap4.css}"/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css} "/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{css/product.css}">
+</head>
+
+<body>
+<header th:insert="common/top-menu.html :: menu"></header>
+
+
+<table class="table table-danger table-striped">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{page.doctor.my-record.records.datetime}"></th>
+        <th scope="col" th:text="#{page.doctor.my-record.records.patient.name}"></th>
+        <th scope="col" th:text="#{page.doctor.my-record.records.patient.birthDate}"></th>
+        <th scope="col" th:text="#{page.doctor.my-record.records.department}"></th>
+    </tr>
+    </thead>
+    <tbody id="record-table">
+    <tr th:each="record : ${records.getContent()}">
+        <td th:text="${#temporals.format(record.dateTime,'dd MMMM yyyy HH:mm')}"></td>
+        <td th:text="${record.patient.name}"></td>
+        <td th:text="${#temporals.format(record.patient.birthDate, 'yyyy')}"></td>
+        <td th:text="${record.department}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<nav aria-label="Pagination" th:if="${!records.isEmpty()}">
+    <ul class="pagination">
+        <li th:classappend="${!records.hasPrevious()} ? disabled" class="page-item">
+            <a class="page-link" th:unless="${records.hasPrevious()}">&laquo;</a>
+            <a class="page-link"
+               th:if="${records.hasPrevious()}"
+               th:with="pr = ${records.previousPageable()}"
+               th:href="@{/(page=${pr.getPageNumber()}, pageSize=${pr.getPageSize()})}">&laquo;</a>
+        </li>
+        <li th:classappend="${records.number == (page - 1)} ? 'active pointer-disabled'"
+            class="page-item"
+            th:each="page : ${#numbers.sequence(1, records.totalPages )}">
+            <a class="page-link" th:href="@{/(page=${page - 1}, pageSize=${records.getSize()})}"
+               th:text="${page}"></a>
+        </li>
+        <li th:classappend="${!records.hasNext()} ? disabled" class="page-item">
+            <a class="page-link" th:unless="${records.hasNext()}">&raquo;</a>
+            <a class="page-link"
+               th:if="${records.hasNext()}"
+               th:with="next = ${records.nextPageable()}"
+               th:href="@{/(page=${next.getPageNumber()}, pageSize=${next.getPageSize()})}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
+<script th:src="@{/webjars/popper.js/2.0.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/select2-develop/dist/js/select2.full.js}"></script>
+
+</body>
+</html>

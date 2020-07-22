@@ -12,8 +12,7 @@ public class DoctorRecordView {
 
     @DateTimeFormat(pattern = "dd MMMM yyyy HH:mm")
     private LocalDateTime dateTime;
-    private String speciality;
-    private PatientView doctor;
+    private PatientView patient;
     private String department;
 
 }

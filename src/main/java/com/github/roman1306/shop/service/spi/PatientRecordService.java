@@ -1,4 +1,4 @@
-package com.github.roman1306.shop.service;
+package com.github.roman1306.shop.service.spi;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.PatientRecordView;
@@ -17,7 +17,7 @@ public interface PatientRecordService {
     PatientRecordView createRecord(@NonNull RecordPatientRequest request, User user);
 
     @NonNull
-    Page<PatientRecordView> getMyRecords(@NonNull User user, Pageable pageable);
+    Page<PatientRecordView> records(@NonNull User user, Pageable pageable);
 
     List<SlotView> getAvailableSlots(@NonNull UUID speciality, @NonNull UUID departmentId);
 }

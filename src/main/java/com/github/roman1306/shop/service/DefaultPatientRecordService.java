@@ -1,5 +1,6 @@
 package com.github.roman1306.shop.service;
 
+import com.github.roman1306.shop.dao.PatientRecordDao;
 import com.github.roman1306.shop.dao.RecordDao;
 import com.github.roman1306.shop.dao.SlotDao;
 import com.github.roman1306.shop.entity.User;
@@ -8,6 +9,8 @@ import com.github.roman1306.shop.exception.UserIsNotPatientException;
 import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.presentation.SlotView;
 import com.github.roman1306.shop.request.RecordPatientRequest;
+import com.github.roman1306.shop.service.spi.PatientRecordService;
+import com.github.roman1306.shop.service.spi.RecordRoleBasedStrategy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -20,16 +23,16 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class DefaultPatientRecordService implements PatientRecordService {
+public class DefaultPatientRecordService implements PatientRecordService, RecordRoleBasedStrategy<PatientRecordView> {
 
     @NonNull
-    private final RecordDao<PatientRecordView> recordDao;
+    private final PatientRecordDao<PatientRecordView> recordDao;
 
     @NonNull
     private final SlotDao<SlotView> slotDao;
 
     public DefaultPatientRecordService(
-            @NonNull RecordDao<PatientRecordView> recordDao,
+            @NonNull PatientRecordDao<PatientRecordView> recordDao,
             @NonNull SlotDao<SlotView> slotDao
     ) {
         this.recordDao = recordDao;
@@ -53,7 +56,7 @@ public class DefaultPatientRecordService implements PatientRecordService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PatientRecordView> getMyRecords(User user, Pageable pageable) {
+    public Page<PatientRecordView> records(User user, Pageable pageable) {
         return this.recordDao.findByUserId(user.getUsername(), pageable);
     }
 
@@ -63,5 +66,11 @@ public class DefaultPatientRecordService implements PatientRecordService {
         final LocalDateTime start = LocalDateTime.now().withMinute(0).plusHours(3);
         LocalDateTime end = start.plusDays(5).withHour(20);
         return this.slotDao.findAvailable(speciality, departmentId, start, end);
+    }
+
+
+    @Override
+    public boolean support(@NonNull User user) {
+        return user.isPatient();
     }
 }

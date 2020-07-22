@@ -1,4 +1,4 @@
-package com.github.roman1306.shop.service;
+package com.github.roman1306.shop.service.spi;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.DepartmentView;
@@ -18,5 +18,5 @@ public interface ContentProvider {
     List<DepartmentView> departments();
 
     @NonNull
-    Page<Object> records(@NonNull User user, @NonNull Pageable pageable);
+    Page<?> records(@NonNull User user, @NonNull Pageable pageable);
 }

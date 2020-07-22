@@ -1,6 +1,6 @@
 package com.github.roman1306.shop.dao.impl;
 
-import com.github.roman1306.shop.dao.RecordDao;
+import com.github.roman1306.shop.dao.PatientRecordDao;
 import com.github.roman1306.shop.presentation.DoctorView;
 import com.github.roman1306.shop.presentation.PatientRecordView;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -14,13 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Transactional
-public class PatientJdbcRecordDao implements RecordDao<PatientRecordView> {
+public class PatientJdbcRecordDao implements PatientRecordDao<PatientRecordView> {
 
     @NonNull
     private final SqlHolder sqlHolder;
@@ -80,9 +79,9 @@ public class PatientJdbcRecordDao implements RecordDao<PatientRecordView> {
     @Override
     @NonNull
     public Page<PatientRecordView> findByUserId(@NonNull String username, @NonNull Pageable pageable) {
-        final String sql = sql("sql/find-records-by-user-id.sql")
+        final String sql = sql("sql/patient-find-records-by-user-id.sql")
                 + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset();
-        final String countSql = sql("sql/count-records.sql");
+        final String countSql = sql("sql/patient-count-records.sql");
         final Long total = this.jdbc.queryForObject(countSql, (rs, i) -> rs.getLong("id"), username);
         final List<PatientRecordView> records = this.jdbc.query(
                 sql,

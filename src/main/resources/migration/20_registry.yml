@@ -53,12 +53,6 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: name
-                  type: varchar(255)
-                  remarks: ФИО врача
-                  constraints:
-                    nullable: false
-              - column:
                   name: description
                   type: varchar(4000)
                   remarks: Краткое описание врача
@@ -103,12 +97,6 @@ databaseChangeLog:
                   remarks: Идентификатор пациента
                   constraints:
                     primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(255)
-                  remarks: Имя пациента
-                  constraints:
                     nullable: false
               - column:
                   name: user_id

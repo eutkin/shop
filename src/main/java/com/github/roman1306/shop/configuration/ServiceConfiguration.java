@@ -1,7 +1,7 @@
 package com.github.roman1306.shop.configuration;
 
 import com.github.roman1306.shop.dao.UserDao;
-import com.github.roman1306.shop.service.UserService;
+import com.github.roman1306.shop.service.spi.UserService;
 import com.github.roman1306.shop.service.UserServiceImpl;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;

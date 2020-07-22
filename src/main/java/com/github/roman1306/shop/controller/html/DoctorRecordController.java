@@ -4,8 +4,8 @@ import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.DoctorView;
 import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.presentation.SlotView;
-import com.github.roman1306.shop.service.ContentProvider;
-import com.github.roman1306.shop.service.PatientRecordService;
+import com.github.roman1306.shop.service.spi.ContentProvider;
+import com.github.roman1306.shop.service.spi.PatientRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -45,7 +45,7 @@ public class DoctorRecordController {
     ModelAndView patientRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         final var modelAndView = new ModelAndView("patient/my-record");
         Page<PatientRecordView> myRecords = this.patientRecordService
-                .getMyRecords(user, pageable);
+                .records(user, pageable);
         modelAndView.addObject("records", myRecords);
         modelAndView.addObject("specialities", this.contentProvider.specialities());
         modelAndView.addObject("departments", this.contentProvider.departments());

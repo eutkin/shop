@@ -18,14 +18,34 @@ databaseChangeLog:
             remarks: Пользователи
             columns:
               - column:
-                  name: name
+                  name: username
                   type: varchar(50)
+                  remarks: Логин
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: password
-                  type: varchar(4000)
+                  type: varchar(512)
+                  remarks: Хэш пароля
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  remarks: Имя пользователя
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(50)
+                  remarks: Фамилия пользователя
+                  constraints:
+                    nullable: false
+              - column:
+                  name: birth_date
+                  type: date
+                  remarks: Дата рождения пользователя
                   constraints:
                     nullable: false
         - createTable:

@@ -2,7 +2,7 @@ package com.github.roman1306.shop.controller.html;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.exception.UserAlreadyExistsException;
-import com.github.roman1306.shop.service.UserService;
+import com.github.roman1306.shop.service.spi.UserService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.http.HttpStatus;

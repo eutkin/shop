@@ -3,7 +3,7 @@ package com.github.roman1306.shop.controller.rest;
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.request.RecordPatientRequest;
-import com.github.roman1306.shop.service.PatientRecordService;
+import com.github.roman1306.shop.service.spi.PatientRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -32,6 +32,6 @@ public class RecordRestController {
 
     @GetMapping
     Page<PatientRecordView> myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
-        return this.patientRecordService.getMyRecords(user, pageable);
+        return this.patientRecordService.records(user, pageable);
     }
 }

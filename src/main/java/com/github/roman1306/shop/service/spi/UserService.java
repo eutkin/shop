@@ -1,4 +1,4 @@
-package com.github.roman1306.shop.service;
+package com.github.roman1306.shop.service.spi;
 
 import com.github.roman1306.shop.entity.Role;
 import com.github.roman1306.shop.entity.User;

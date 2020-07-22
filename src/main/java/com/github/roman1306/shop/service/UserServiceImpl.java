@@ -4,6 +4,7 @@ import com.github.roman1306.shop.dao.UserDao;
 import com.github.roman1306.shop.entity.Role;
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.exception.UserAlreadyExistsException;
+import com.github.roman1306.shop.service.spi.UserService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

@@ -2,10 +2,9 @@ package com.github.roman1306.shop.controller.html;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.DoctorView;
-import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.presentation.SlotView;
-import com.github.roman1306.shop.service.ContentProvider;
-import com.github.roman1306.shop.service.PatientRecordService;
+import com.github.roman1306.shop.service.spi.ContentProvider;
+import com.github.roman1306.shop.service.spi.PatientRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -27,7 +26,7 @@ import static java.util.stream.Collectors.groupingBy;
 @Controller
 @RequestMapping("/")
 @PreAuthorize("isAuthenticated()")
-public class PatientRecordController {
+public class RecordController {
 
     @NonNull
     private final PatientRecordService patientRecordService;
@@ -35,7 +34,7 @@ public class PatientRecordController {
     @NonNull
     private final ContentProvider contentProvider;
 
-    public PatientRecordController(
+    public RecordController(
             @NonNull PatientRecordService patientRecordService,
             @NonNull ContentProvider contentProvider
     ) {
@@ -44,10 +43,10 @@ public class PatientRecordController {
     }
 
     @GetMapping
-    ModelAndView patientRecords(@AuthenticationPrincipal User user, Pageable pageable) {
+    ModelAndView myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         final var subdir = user.isPatient() ? "patient" : "doctor";
         final var modelAndView = new ModelAndView(String.join("/", subdir, "my-records"));
-        final Page<Object> records = this.contentProvider.records(user, pageable);
+        final Page<?> records = this.contentProvider.records(user, pageable);
         modelAndView.addObject("records", records);
         modelAndView.addObject("specialities", this.contentProvider.specialities());
         modelAndView.addObject("departments", this.contentProvider.departments());
@@ -55,6 +54,7 @@ public class PatientRecordController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('PATIENT')")
     @GetMapping("/slots/{specialityId}/{departmentId}")
     ModelAndView slots(@PathVariable UUID specialityId, @PathVariable UUID departmentId) {
         final var modelAndView = new ModelAndView("patient/slots");
