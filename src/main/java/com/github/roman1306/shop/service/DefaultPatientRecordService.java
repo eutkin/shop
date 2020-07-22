@@ -5,7 +5,7 @@ import com.github.roman1306.shop.dao.SlotDao;
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.exception.SlotAlreadyBookedException;
 import com.github.roman1306.shop.exception.UserIsNotPatientException;
-import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.presentation.SlotView;
 import com.github.roman1306.shop.request.RecordPatientRequest;
 import org.springframework.data.domain.Page;
@@ -20,16 +20,16 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class DefaultRecordService implements RecordService {
+public class DefaultPatientRecordService implements PatientRecordService {
 
     @NonNull
-    private final RecordDao<RecordView> recordDao;
+    private final RecordDao<PatientRecordView> recordDao;
 
     @NonNull
     private final SlotDao<SlotView> slotDao;
 
-    public DefaultRecordService(
-            @NonNull RecordDao<RecordView> recordDao,
+    public DefaultPatientRecordService(
+            @NonNull RecordDao<PatientRecordView> recordDao,
             @NonNull SlotDao<SlotView> slotDao
     ) {
         this.recordDao = recordDao;
@@ -39,7 +39,7 @@ public class DefaultRecordService implements RecordService {
     @NonNull
     @Override
     @Transactional
-    public RecordView createRecord(@NonNull RecordPatientRequest request, User user) {
+    public PatientRecordView createRecord(@NonNull RecordPatientRequest request, User user) {
         UUID slotId = request.getSlotId();
         UUID patientId = this.recordDao.findPatientIdByUserId(user.getUsername())
                 .orElseThrow(() -> new UserIsNotPatientException(user));
@@ -53,7 +53,7 @@ public class DefaultRecordService implements RecordService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<RecordView> getMyRecords(User user, Pageable pageable) {
+    public Page<PatientRecordView> getMyRecords(User user, Pageable pageable) {
         return this.recordDao.findByUserId(user.getUsername(), pageable);
     }
 

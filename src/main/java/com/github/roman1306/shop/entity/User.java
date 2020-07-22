@@ -73,4 +73,14 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean isPatient() {
+        return this.getRoles().stream().map(Role::getAuthority)
+                .anyMatch("PATIENT"::equalsIgnoreCase);
+    }
+
+    public boolean isDoctor() {
+        return this.getRoles().stream().map(Role::getAuthority)
+                .anyMatch("DOCTOR"::equalsIgnoreCase);
+    }
 }

@@ -11,11 +11,11 @@
 
 <body class="text-center">
 
-<form class="form-signin">
+<form class="form-signin" method="post" th:action="@{/login}">
     <img th:src="@{img/hospital.png}" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{page.welcome.header}"></h1>
-    <input th:placeholder="#{page.register.field.login}" class="form-control" type="email"/>
-    <input th:placeholder="#{page.register.field.password}" class="form-control" type="password"/>
+    <input name="username" th:placeholder="#{page.register.field.login}" class="form-control" type="text"/>
+    <input name="password" th:placeholder="#{page.register.field.password}" class="form-control" type="password"/>
     <button type="submit" class="btn btn-lg btn-danger btn-block" th:text="#{page.welcome.btn-enter}"></button>
     <button id="register-btn" type="button" class="btn btn-ls btn-secondary btn-block"
             th:text="#{page.welcome.btn-reg}"></button>

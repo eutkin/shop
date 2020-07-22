@@ -8,11 +8,12 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class RecordView {
+public class PatientRecordView {
 
     @DateTimeFormat(pattern = "dd MMMM yyyy HH:mm")
     private LocalDateTime dateTime;
     private String speciality;
     private DoctorView doctor;
+    private String department;
 
 }

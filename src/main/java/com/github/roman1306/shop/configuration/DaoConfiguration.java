@@ -3,11 +3,11 @@ package com.github.roman1306.shop.configuration;
 import com.github.roman1306.shop.dao.RecordDao;
 import com.github.roman1306.shop.dao.SlotDao;
 import com.github.roman1306.shop.dao.UserDao;
-import com.github.roman1306.shop.dao.impl.JdbcRecordDao;
+import com.github.roman1306.shop.dao.impl.PatientJdbcRecordDao;
 import com.github.roman1306.shop.dao.impl.JdbcSlotDao;
 import com.github.roman1306.shop.dao.impl.SqlHolder;
 import com.github.roman1306.shop.dao.impl.JdbcUserDao;
-import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.presentation.SlotView;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -29,17 +29,17 @@ public class DaoConfiguration {
     }
 
     @Bean
-    RowMapper<RecordView> recordPresentationRowMapper() {
-        return new JdbcRecordDao.RecordRowMapper();
+    RowMapper<PatientRecordView> recordPresentationRowMapper() {
+        return new PatientJdbcRecordDao.RecordRowMapper();
     }
 
     @Bean
-    RecordDao<RecordView> recordDao(
+    RecordDao<PatientRecordView> recordDao(
             @NonNull SqlHolder sqlHolder,
             @NonNull JdbcOperations jdbc,
-            @NonNull RowMapper<RecordView> rowMapper
+            @NonNull RowMapper<PatientRecordView> rowMapper
     ) {
-        return new JdbcRecordDao(sqlHolder, jdbc, rowMapper);
+        return new PatientJdbcRecordDao(sqlHolder, jdbc, rowMapper);
     }
 
     @Bean

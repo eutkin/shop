@@ -2,7 +2,7 @@ package com.github.roman1306.shop.dao.impl;
 
 import com.github.roman1306.shop.dao.RecordDao;
 import com.github.roman1306.shop.presentation.DoctorView;
-import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.PatientRecordView;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Transactional
-public class JdbcRecordDao implements RecordDao<RecordView> {
+public class PatientJdbcRecordDao implements RecordDao<PatientRecordView> {
 
     @NonNull
     private final SqlHolder sqlHolder;
@@ -29,12 +29,12 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
     private final JdbcOperations jdbc;
 
     @NonNull
-    private final RowMapper<RecordView> rowMapper;
+    private final RowMapper<PatientRecordView> rowMapper;
 
-    public JdbcRecordDao(
+    public PatientJdbcRecordDao(
             @NonNull SqlHolder sqlHolder,
             @NonNull JdbcOperations jdbc,
-            @NonNull RowMapper<RecordView> rowMapper
+            @NonNull RowMapper<PatientRecordView> rowMapper
     ) {
         this.sqlHolder = sqlHolder;
         this.jdbc = jdbc;
@@ -68,7 +68,7 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
     }
 
     @Override
-    public RecordView findById(@NonNull UUID recordId) {
+    public PatientRecordView findById(@NonNull UUID recordId) {
         try {
             return this.jdbc
                     .queryForObject(sql("sql/find-record-by-id.sql"), this.rowMapper, recordId);
@@ -79,12 +79,12 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
 
     @Override
     @NonNull
-    public Page<RecordView> findByUserId(@NonNull String username, @NonNull Pageable pageable) {
+    public Page<PatientRecordView> findByUserId(@NonNull String username, @NonNull Pageable pageable) {
         final String sql = sql("sql/find-records-by-user-id.sql")
                 + " LIMIT " + pageable.getPageSize() + " OFFSET " + pageable.getOffset();
         final String countSql = sql("sql/count-records.sql");
         final Long total = this.jdbc.queryForObject(countSql, (rs, i) -> rs.getLong("id"), username);
-        final List<RecordView> records = this.jdbc.query(
+        final List<PatientRecordView> records = this.jdbc.query(
                 sql,
                 this.rowMapper,
                 username
@@ -97,17 +97,19 @@ public class JdbcRecordDao implements RecordDao<RecordView> {
         return this.sqlHolder.load(path);
     }
 
-    public static class RecordRowMapper implements RowMapper<RecordView> {
+    public static class RecordRowMapper implements RowMapper<PatientRecordView> {
 
         @Override
-        public RecordView mapRow(ResultSet rs, int rowNum) throws SQLException {
-            final Timestamp timestamp = rs.getTimestamp("datetime");
-            final String speciality = rs.getString("speciality");
-            final String doctorName = rs.getString("doctor_name");
-            final String doctorDesc = rs.getString("doctor_desc");
-            return new RecordView()
+        public PatientRecordView mapRow(ResultSet rs, int rowNum) throws SQLException {
+            final var timestamp = rs.getTimestamp("datetime");
+            final var speciality = rs.getString("speciality");
+            final var doctorName = rs.getString("doctor_name");
+            final var doctorDesc = rs.getString("doctor_desc");
+            final var department = rs.getString("department");
+            return new PatientRecordView()
                     .setDateTime(timestamp.toLocalDateTime())
                     .setSpeciality(speciality)
+                    .setDepartment(department)
                     .setDoctor(new DoctorView().setName(doctorName).setDescription(doctorDesc));
         }
     }

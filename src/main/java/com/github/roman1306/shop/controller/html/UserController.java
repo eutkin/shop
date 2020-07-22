@@ -1,4 +1,4 @@
-package com.github.roman1306.shop.controller.view;
+package com.github.roman1306.shop.controller.html;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.exception.UserAlreadyExistsException;
@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;

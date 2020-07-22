@@ -7,7 +7,7 @@ $(document).ready(function () {
     $('#slotTime-tab').on('shown.bs.tab', function (e) {
         let specialityId = $('#select-speciality').val()
         let departmentId = $('#select-department').val()
-        $.get('/slots/' + specialityId + '/' + departmentId, function (data) {
+        $.get('/patient/slots/' + specialityId + '/' + departmentId, function (data) {
             $('#slot-container').append(data)
             $('.record-btn').click(function (event) {
                 let $btn = $(event.target)
@@ -28,7 +28,8 @@ $(document).ready(function () {
                         if (rowCount < 20) {
                             $('#record-table').append(
                                 '<tr><td>' + data.dateTime + '</td><td>' +
-                                data.speciality + '</td><td>' + data.doctor.name + '</td></tr>'
+                                data.speciality + '</td><td>' + data.doctor.name + '</td><td>' +
+                                data.department + '</td></tr>'
                             )
                         }
                         $('#slot-container').empty()

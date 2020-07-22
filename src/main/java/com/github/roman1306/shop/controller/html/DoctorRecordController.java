@@ -1,11 +1,11 @@
-package com.github.roman1306.shop.controller.view.patient;
+package com.github.roman1306.shop.controller.html;
 
 import com.github.roman1306.shop.entity.User;
 import com.github.roman1306.shop.presentation.DoctorView;
-import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.presentation.SlotView;
 import com.github.roman1306.shop.service.ContentProvider;
-import com.github.roman1306.shop.service.RecordService;
+import com.github.roman1306.shop.service.PatientRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -24,27 +24,27 @@ import java.util.UUID;
 import static java.util.stream.Collectors.groupingBy;
 
 @Controller
-@RequestMapping({"/", "/records"})
-public class RecordController {
+@RequestMapping("/patient")
+public class DoctorRecordController {
 
     @NonNull
-    private final RecordService recordService;
+    private final PatientRecordService patientRecordService;
 
     @NonNull
     private final ContentProvider contentProvider;
 
-    public RecordController(
-            @NonNull RecordService recordService,
+    public DoctorRecordController(
+            @NonNull PatientRecordService patientRecordService,
             @NonNull ContentProvider contentProvider
     ) {
-        this.recordService = recordService;
+        this.patientRecordService = patientRecordService;
         this.contentProvider = contentProvider;
     }
 
     @GetMapping
-    ModelAndView myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
+    ModelAndView patientRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         final var modelAndView = new ModelAndView("patient/my-record");
-        Page<RecordView> myRecords = this.recordService
+        Page<PatientRecordView> myRecords = this.patientRecordService
                 .getMyRecords(user, pageable);
         modelAndView.addObject("records", myRecords);
         modelAndView.addObject("specialities", this.contentProvider.specialities());
@@ -56,7 +56,7 @@ public class RecordController {
     @GetMapping("/slots/{specialityId}/{departmentId}")
     ModelAndView slots(@PathVariable UUID specialityId, @PathVariable UUID departmentId) {
         final var modelAndView = new ModelAndView("patient/slots");
-        final List<SlotView> slots = this.recordService.getAvailableSlots(specialityId, departmentId);
+        final List<SlotView> slots = this.patientRecordService.getAvailableSlots(specialityId, departmentId);
 
         final Map<LocalDate, Map<DoctorView, List<SlotView>>> slotsByDateAndDoctor = slots
                 .stream()

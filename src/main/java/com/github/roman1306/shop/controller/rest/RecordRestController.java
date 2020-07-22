@@ -1,9 +1,9 @@
 package com.github.roman1306.shop.controller.rest;
 
 import com.github.roman1306.shop.entity.User;
-import com.github.roman1306.shop.presentation.RecordView;
+import com.github.roman1306.shop.presentation.PatientRecordView;
 import com.github.roman1306.shop.request.RecordPatientRequest;
-import com.github.roman1306.shop.service.RecordService;
+import com.github.roman1306.shop.service.PatientRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.*;
 public class RecordRestController {
 
     @NonNull
-    private final RecordService recordService;
+    private final PatientRecordService patientRecordService;
 
-    public RecordRestController(@NonNull RecordService recordService) {
-        this.recordService = recordService;
+    public RecordRestController(@NonNull PatientRecordService patientRecordService) {
+        this.patientRecordService = patientRecordService;
     }
 
     @PostMapping
     @PreAuthorize("hasRole('PATIENT')")
-    RecordView recordPatient(
+    PatientRecordView recordPatient(
             @AuthenticationPrincipal User user,
             @RequestBody RecordPatientRequest request) {
-        return this.recordService.createRecord(request, user);
+        return this.patientRecordService.createRecord(request, user);
     }
 
     @GetMapping
-    Page<RecordView> myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
-        return this.recordService.getMyRecords(user, pageable);
+    Page<PatientRecordView> myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
+        return this.patientRecordService.getMyRecords(user, pageable);
     }
 }

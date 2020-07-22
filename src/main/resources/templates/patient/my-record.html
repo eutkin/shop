@@ -107,6 +107,7 @@
         <th scope="col" th:text="#{page.patient.my-record.records.datetime}"></th>
         <th scope="col" th:text="#{page.patient.my-record.records.speciality}"></th>
         <th scope="col" th:text="#{page.patient.my-record.records.doctor}"></th>
+        <th scope="col" th:text="#{page.patient.my-record.records.department}"></th>
     </tr>
     </thead>
     <tbody id="record-table">
@@ -114,6 +115,7 @@
         <td th:text="${#temporals.format(record.dateTime,'dd MMMM yyyy HH:mm')}"></td>
         <td th:text="${record.speciality}"></td>
         <td th:text="${record.doctor.name}"></td>
+        <td th:text="${record.department}"></td>
     </tr>
     </tbody>
 </table>
