@@ -1,4 +1,3 @@
-create extension if not exists "uuid-ossp";
 with timeslots as (
     select generate_series(
                    (current_date || ' 08:00')::timestamp,

@@ -2,4 +2,5 @@ databaseChangeLog:
   - includeAll:
       path: ./migration
   - includeAll:
+      contexts: demo
       path: ./init-db

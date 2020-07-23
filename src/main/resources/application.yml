@@ -1,6 +1,7 @@
 spring:
   liquibase:
     change-log: classpath:master.yml
+    contexts: ${spring.profiles.active}
   application:
     api-prefix: /api/v1
   autoconfigure:

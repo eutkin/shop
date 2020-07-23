@@ -1,5 +1,12 @@
 databaseChangeLog:
   - changeSet:
+      id: uuid_extension
+      author: roman1306
+      changes:
+        - sql:
+            sql: create extension if not exists "uuid-ossp"
+            comment: Добавляем фунции для UUID
+  - changeSet:
       id: registry
       author: roman1306
       changes:

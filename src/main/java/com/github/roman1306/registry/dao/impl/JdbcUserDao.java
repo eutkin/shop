@@ -5,11 +5,15 @@ import com.github.roman1306.registry.entity.Role;
 import com.github.roman1306.registry.entity.User;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -65,7 +69,10 @@ public class JdbcUserDao implements UserDao {
         for (GrantedAuthority role : user.getAuthorities()) {
             this.jdbc.update(userRoleSql, user.getUsername(), role.getAuthority());
         }
-        this.jdbc.update(roleSql, UUID.randomUUID().toString(), user.getUsername());
+        this.jdbc.update(roleSql, ps -> {
+            ps.setObject(1, UUID.randomUUID());
+            ps.setObject(2, user.getUsername());
+        });
         return user;
     }
 
