@@ -1,3 +1,2 @@
-select distinct d.department_id, name, address
-from departments d
-    join doctor_slots ds on d.department_id = ds.departament_id
+SELECT department_id, name, address
+FROM departments
