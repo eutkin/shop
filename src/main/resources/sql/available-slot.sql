@@ -12,3 +12,4 @@ from doctor_slots s
 where s.speciality_id = ?
   and s.departament_id = ?
   and s.time_slot between ? and ?
+order by time_slot, doctor_id
