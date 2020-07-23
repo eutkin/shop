@@ -26,7 +26,7 @@
                 </li>
             </ul>
             <form class="form-inline" id="logout-form" method="post" th:action="@{/logout}">
-                <span class="navbar-text text-dark" sec:authentication="principal.name"></span>
+                <span class="navbar-text text-dark" sec:authentication="name"></span>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <a class="btn btn-dark my-2 my-sm-0 button-margin" type="submit"
                         th:text="#{common.menu.logout}" href="#" onclick="document.getElementById('logout-form').submit();"></a>
