@@ -4,6 +4,7 @@ import com.github.roman1306.registry.entity.User;
 import com.github.roman1306.registry.presentation.PatientRecordView;
 import com.github.roman1306.registry.presentation.SlotView;
 import com.github.roman1306.registry.request.RecordPatientRequest;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;

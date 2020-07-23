@@ -5,6 +5,7 @@ import com.github.roman1306.registry.presentation.DoctorView;
 import com.github.roman1306.registry.presentation.SlotView;
 import com.github.roman1306.registry.service.spi.ContentProvider;
 import com.github.roman1306.registry.service.spi.PatientRecordService;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -43,6 +44,7 @@ public class RecordController {
     }
 
     @GetMapping
+    @Timed("records.request")
     ModelAndView myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
         final var subdir = user.isPatient() ? "patient" : "doctor";
         final var modelAndView = new ModelAndView(String.join("/", subdir, "my-record"));
