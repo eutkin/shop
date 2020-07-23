@@ -70,7 +70,7 @@ databaseChangeLog:
                   type: varchar(4000)
                   remarks: Краткое описание врача
                   constraints:
-                    nullable: false
+                    nullable: true
               - column:
                   name: user_id
                   type: varchar(50)
