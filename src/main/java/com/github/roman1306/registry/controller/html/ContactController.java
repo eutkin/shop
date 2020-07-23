@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Контроллер для страницы Контактов
+ */
 @Controller
 @RequestMapping("/contacts")
 public class ContactController {
@@ -22,7 +25,6 @@ public class ContactController {
     ModelAndView contacts() {
         final var modelAndView = new ModelAndView("contacts");
         modelAndView.addObject("departments", this.contentProvider.departments());
-
         return modelAndView;
     }
 

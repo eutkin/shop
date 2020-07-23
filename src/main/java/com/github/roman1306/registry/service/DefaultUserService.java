@@ -7,16 +7,18 @@ import com.github.roman1306.registry.exception.UserAlreadyExistsException;
 import com.github.roman1306.registry.service.spi.UserService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
+@Service
+public class DefaultUserService implements UserService {
 
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(
+    public DefaultUserService(
             @NonNull UserDao userDao,
             @NonNull PasswordEncoder passwordEncoder
     ) {
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Role> getRoles() {
         return this.userDao.getRoles();
     }

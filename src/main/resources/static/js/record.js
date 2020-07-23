@@ -12,12 +12,11 @@ $(document).ready(function () {
             $('.record-btn').click(function (event) {
                 let $btn = $(event.target)
                 let slotId = $btn.attr('slotId')
-                let body = {slotId: slotId}
                 let headers = {}
                 headers[header] = token
                 $.ajax({
                     url: '/api/v1/record',
-                    data: JSON.stringify(body),
+                    data: JSON.stringify(slotId),
                     method: 'POST',
                     headers: headers,
                     contentType: 'application/json',

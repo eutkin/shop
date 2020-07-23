@@ -1,4 +1,5 @@
-INSERT INTO public.user_roles (username, role) VALUES ('root', 'ADMIN');
+--liquibase formatted sql
+-- changeset roman1306:init_user_roles context:demo dbms:postgresql
 INSERT INTO public.user_roles (username, role) VALUES ('Oleg228', 'DOCTOR');
 INSERT INTO public.user_roles (username, role) VALUES ('FOX', 'DOCTOR');
 INSERT INTO public.user_roles (username, role) VALUES ('Flower', 'DOCTOR');

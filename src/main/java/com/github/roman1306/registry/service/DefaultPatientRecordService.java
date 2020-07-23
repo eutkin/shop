@@ -7,7 +7,6 @@ import com.github.roman1306.registry.exception.SlotAlreadyBookedException;
 import com.github.roman1306.registry.exception.UserIsNotPatientException;
 import com.github.roman1306.registry.presentation.PatientRecordView;
 import com.github.roman1306.registry.presentation.SlotView;
-import com.github.roman1306.registry.request.RecordPatientRequest;
 import com.github.roman1306.registry.service.spi.PatientRecordService;
 import com.github.roman1306.registry.service.spi.RecordRoleBasedStrategy;
 import org.springframework.data.domain.Page;
@@ -41,8 +40,7 @@ public class DefaultPatientRecordService implements PatientRecordService, Record
     @NonNull
     @Override
     @Transactional
-    public PatientRecordView createRecord(@NonNull RecordPatientRequest request, User user) {
-        UUID slotId = request.getSlotId();
+    public PatientRecordView createRecord(@NonNull UUID slotId, User user) {
         UUID patientId = this.recordDao.findPatientIdByUserId(user.getUsername())
                 .orElseThrow(() -> new UserIsNotPatientException(user));
         boolean busy = this.recordDao.busySlot(slotId);

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Transactional
+@Repository
 public class PatientJdbcRecordDao implements PatientRecordDao<PatientRecordView> {
 
     @NonNull
@@ -96,6 +98,7 @@ public class PatientJdbcRecordDao implements PatientRecordDao<PatientRecordView>
         return this.sqlHolder.load(path);
     }
 
+    @Component
     public static class RecordRowMapper implements RowMapper<PatientRecordView> {
 
         @Override

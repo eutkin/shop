@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Контроллер для страницы Наши Доктора
+ */
 @Controller
 @RequestMapping("/doctors")
 public class DoctorController {

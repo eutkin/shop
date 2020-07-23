@@ -1,3 +1,5 @@
+--liquibase formatted sql
+-- changeset roman1306:init_specialities context:demo dbms:postgresql
 INSERT INTO public.specialties (speciality_id, name) VALUES ('910f143f-24b7-4a63-92d5-b46ad57c46e0', 'Терапевт');
 INSERT INTO public.specialties (speciality_id, name) VALUES ('37c1e40c-5a37-4895-aa75-df7ab07dbfd5', 'Отоларинголог');
 INSERT INTO public.specialties (speciality_id, name) VALUES ('1e6419c7-2754-43a2-be3a-f71d8a2162d3', 'Невролог');

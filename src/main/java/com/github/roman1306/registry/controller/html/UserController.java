@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
@@ -23,12 +24,17 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
-
+/**
+ * Контроллер, отвечающий за страницы, которые относятся к пользователям:
+ * страницы логина и страницы регистрации.
+ */
 @Controller
 @RequestMapping("/")
 public class UserController implements MessageSourceAware {
 
+    @NonNull
     private final UserService userService;
+
     private MessageSource messageSource;
 
     public UserController(@NonNull UserService userService) {
@@ -71,6 +77,15 @@ public class UserController implements MessageSourceAware {
     @ResponseBody
     Map<String, String> handle(BindException ex, Locale locale) {
         return ex.getFieldErrors().stream()
+                .filter(fe -> fe.getDefaultMessage() != null)
+                .collect(toMap(FieldError::getField, s -> this.messageSource.getMessage(s.getDefaultMessage(), new Object[0], locale)));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    Map<String, String> handle(MethodArgumentNotValidException ex, Locale locale) {
+        return ex.getBindingResult().getFieldErrors().stream()
                 .filter(fe -> fe.getDefaultMessage() != null)
                 .collect(toMap(FieldError::getField, s -> this.messageSource.getMessage(s.getDefaultMessage(), new Object[0], locale)));
     }

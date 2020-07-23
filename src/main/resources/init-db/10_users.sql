@@ -1,4 +1,5 @@
-INSERT INTO public.users (username, password, name, surname, birth_date) VALUES ('root', 'root', 'root', '', '01-01-1970');
+--liquibase formatted sql
+-- changeset roman1306:init_users context:demo dbms:postgresql
 INSERT INTO public.users (username, password, name, surname, birth_date) VALUES ('Oleg228', 'NoThanks', 'Олег', 'Алексеев', '01-01-1965');
 INSERT INTO public.users (username, password, name, surname, birth_date) VALUES ('FOX', 'Qwerty', 'Светлана', 'Гурьева', '01-01-2000');
 INSERT INTO public.users (username, password, name, surname, birth_date) VALUES ('Flower', 'SUN', 'Надежда', 'Васильева', '01-01-1976');

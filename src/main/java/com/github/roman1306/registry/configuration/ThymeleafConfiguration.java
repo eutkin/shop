@@ -4,6 +4,9 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
+/**
+ * Конфигурация шаблонизатора
+ */
 @SpringBootConfiguration
 public class ThymeleafConfiguration {
 

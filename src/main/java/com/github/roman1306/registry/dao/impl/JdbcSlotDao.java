@@ -6,6 +6,8 @@ import com.github.roman1306.registry.presentation.SlotView;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class JdbcSlotDao<T> implements SlotDao<SlotView> {
 
     @NonNull
@@ -46,6 +49,7 @@ public class JdbcSlotDao<T> implements SlotDao<SlotView> {
         return this.jdbc.query(sql, this.rowMapper, speciality, departmentId, startInclusive, endInclusive);
     }
 
+    @Component
     public static class SlotRowMapper implements RowMapper<SlotView> {
         @Override
         public SlotView mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -15,8 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Objects;
 
+/**
+ * Настройка безопасности
+ */
 @SpringBootConfiguration
-@Import({DaoConfiguration.class})
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -28,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/logout")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/register").permitAll()
+                .antMatchers("/login", "/register", "/actuator/**").permitAll()
                 .antMatchers("/**").authenticated();
     }
 

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
-@Transactional
+@Repository
 public class JdbcUserDao implements UserDao {
 
     private final JdbcOperations jdbc;

@@ -3,6 +3,7 @@ package com.github.roman1306.registry.dao.impl;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.io.UncheckedIOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public interface SqlHolder {
+interface SqlHolder {
 
     @NonNull
     String load(@NonNull String path);
@@ -21,6 +22,7 @@ public interface SqlHolder {
         return new InMemorySqlHolder();
     }
 
+    @Component
     class InMemorySqlHolder implements SqlHolder {
         private final Map<String, String> sql = new ConcurrentHashMap<>();
 

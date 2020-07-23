@@ -1,3 +1,5 @@
+--liquibase formatted sql
+-- changeset roman1306:init_slots context:demo dbms:postgresql
 with timeslots as (
     select generate_series(
                    (current_date || ' 08:00')::timestamp,

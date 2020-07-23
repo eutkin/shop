@@ -24,9 +24,11 @@ import java.util.UUID;
 
 import static java.util.stream.Collectors.groupingBy;
 
+/**
+ * Контроллер, отдающий страницу с записями, как для врача, так и для пациента.
+ */
 @Controller
 @RequestMapping("/")
-@PreAuthorize("isAuthenticated()")
 public class RecordController {
 
     @NonNull
@@ -43,6 +45,13 @@ public class RecordController {
         this.contentProvider = contentProvider;
     }
 
+    /**
+     * Отдает главную страницу с записями.
+     *
+     * @param user     пользователь (врач или пациент)
+     * @param pageable запрос страницы
+     * @return модель и представление
+     */
     @GetMapping
     @Timed("records.request")
     ModelAndView myRecords(@AuthenticationPrincipal User user, Pageable pageable) {
@@ -56,6 +65,16 @@ public class RecordController {
         return modelAndView;
     }
 
+    /**
+     * Отдает фрагмент html страницы с временными слотами. Используется для модального
+     * окна записи пациента на прием.
+     * <p>
+     * Доступно только для пользователей с ролью 'Пациент'.
+     *
+     * @param specialityId идентификатор специальности врача
+     * @param departmentId идентификатор департамента
+     * @return модель и представление
+     */
     @PreAuthorize("hasRole('PATIENT')")
     @GetMapping("/slots/{specialityId}/{departmentId}")
     ModelAndView slots(@PathVariable UUID specialityId, @PathVariable UUID departmentId) {

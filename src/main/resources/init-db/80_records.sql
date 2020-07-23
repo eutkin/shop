@@ -1,3 +1,5 @@
+--liquibase formatted sql
+-- changeset roman1306:init_records context:demo dbms:postgresql
 with data as (
     select p.patient_id, ds.slot_id
     from patients p
