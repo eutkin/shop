@@ -25,6 +25,7 @@ services:
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       SPRING_DATASOURCE_DATA: classpath:local/data.sql
       SPRING_PROFILES_ACTIVE: local, dev-frontend
+      USER_JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     depends_on:
       - postgres
 volumes:
