@@ -51,7 +51,7 @@ public class RecordController {
         final Page<?> records = this.contentProvider.records(user, pageable);
         modelAndView.addObject("records", records);
         modelAndView.addObject("specialities", this.contentProvider.specialities());
-        modelAndView.addObject("departments", this.contentProvider.departments());
+        modelAndView.addObject("departments", this.contentProvider.availableDepartments());
 
         return modelAndView;
     }

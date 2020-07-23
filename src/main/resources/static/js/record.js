@@ -31,6 +31,8 @@ $(document).ready(function () {
                                 data.speciality + '</td><td>' + data.doctor.name + '</td><td>' +
                                 data.department + '</td></tr>'
                             )
+                        } else {
+                            location.reload()
                         }
                         $('#slot-container').empty()
 

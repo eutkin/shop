@@ -19,6 +19,9 @@ public interface ContentProvider {
     List<DepartmentView> departments();
 
     @NonNull
+    List<DepartmentView> availableDepartments();
+
+    @NonNull
     List<DoctorView> doctors();
 
     @NonNull

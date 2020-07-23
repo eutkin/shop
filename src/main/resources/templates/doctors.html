@@ -18,7 +18,7 @@
     <th:block th:each="doctor : ${doctors}">
         <div class="col mb-4">
             <div class="card">
-                <img th:src="@{img/defaultAvatar.png}" class="card-img-top" alt="..." width="250" height="250">
+                <img th:src="${doctor.photo}" class="card-img-top" alt="..." width="250" height="250">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${doctor.name}"></h5>
                     <p class="card-text" th:text="${doctor.description}"></p>

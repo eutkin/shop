@@ -5,6 +5,10 @@ spring:
     api-prefix: /api/v1
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  data:
+    web:
+      pageable:
+        default-page-size: 15
 management:
   endpoints:
     web:

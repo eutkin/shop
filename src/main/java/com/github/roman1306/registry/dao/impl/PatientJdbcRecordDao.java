@@ -109,7 +109,11 @@ public class PatientJdbcRecordDao implements PatientRecordDao<PatientRecordView>
                     .setDateTime(timestamp.toLocalDateTime())
                     .setSpeciality(speciality)
                     .setDepartment(department)
-                    .setDoctor(new DoctorView().setName(doctorName).setDescription(doctorDesc));
+                    .setDoctor(new DoctorView()
+                            .setName(doctorName)
+                            .setDescription(doctorDesc)
+                            .setPhoto(rs.getString("doctor_photo"))
+                    );
         }
     }
 }

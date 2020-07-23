@@ -1,5 +1,6 @@
 package com.github.roman1306.registry.presentation;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class PatientRecordView {
 
-    @DateTimeFormat(pattern = "dd MMMM yyyy HH:mm")
+    @JsonFormat(pattern = "dd MMMM yyyy HH:mm")
     private LocalDateTime dateTime;
     private String speciality;
     private DoctorView doctor;

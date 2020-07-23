@@ -12,4 +12,5 @@ public class DepartmentView {
     private UUID id;
     private String name;
     private String address;
+    private String image;
 }

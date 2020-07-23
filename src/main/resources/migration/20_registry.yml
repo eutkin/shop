@@ -41,6 +41,12 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: image
+                  remarks: Фото отделения
+                  type: text
+                  constraints:
+                    nullable: true
         - createTable:
             tableName: doctors
             remarks: Врачи
@@ -66,6 +72,12 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_doctors_user_id
                     references: users(username)
+              - column:
+                  name: photo
+                  type: text
+                  remarks: Фотография
+                  constraints:
+                    nullable: true
         - createTable:
             tableName: doctor_specialities
             remarks: Специальности врачей

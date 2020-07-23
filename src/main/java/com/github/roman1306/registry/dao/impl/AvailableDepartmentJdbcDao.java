@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
-@Repository("departments-dao")
-public class DepartmentJdbcDao implements DictionaryDao<DepartmentView> {
+@Repository("available-departments-dao")
+public class AvailableDepartmentJdbcDao implements DictionaryDao<DepartmentView> {
 
     @NonNull
     private final JdbcOperations jdbc;
@@ -18,7 +18,7 @@ public class DepartmentJdbcDao implements DictionaryDao<DepartmentView> {
     @NonNull
     private final SqlHolder sqlHolder;
 
-    public DepartmentJdbcDao(
+    public AvailableDepartmentJdbcDao(
             @NonNull JdbcOperations jdbc,
             @NonNull SqlHolder sqlHolder
     ) {
@@ -28,7 +28,7 @@ public class DepartmentJdbcDao implements DictionaryDao<DepartmentView> {
 
     @Override
     public List<DepartmentView> load() {
-        return this.jdbc.query(this.sqlHolder.load("sql/find-departments.sql"), (rs, i) ->
+        return this.jdbc.query(this.sqlHolder.load("sql/find-departments-by-slot-id.sql"), (rs, i) ->
                 new DepartmentView()
                         .setId(UUID.fromString(rs.getString("department_id")))
                         .setName(rs.getString("name"))

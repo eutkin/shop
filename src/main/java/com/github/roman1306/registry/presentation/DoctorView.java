@@ -14,4 +14,6 @@ public class DoctorView {
     private String name;
 
     private String description;
+
+    private String photo;
 }

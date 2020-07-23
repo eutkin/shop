@@ -56,6 +56,7 @@ public class JdbcSlotDao<T> implements SlotDao<SlotView> {
                             .setId(UUID.fromString(rs.getString("doctor_id")))
                             .setName(rs.getString("doctor_name"))
                             .setDescription(rs.getString("doctor_desc"))
+                            .setPhoto(rs.getString("doctor_photo"))
                     )
                     .setAvailable(rs.getBoolean("available"));
         }

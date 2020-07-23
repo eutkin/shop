@@ -3,6 +3,7 @@ select s.slot_id,
        s.doctor_id,
        du.name || ' ' || du.surname                           as doctor_name,
        d.description                                          as doctor_desc,
+       d.photo as doctor_photo,
        case when r.record_id is null then true else false end as available
 from doctor_slots s
          join doctors d on s.doctor_id = d.doctor_id

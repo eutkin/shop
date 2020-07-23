@@ -7,6 +7,7 @@ import com.github.roman1306.registry.presentation.DoctorView;
 import com.github.roman1306.registry.presentation.SpecialityView;
 import com.github.roman1306.registry.service.spi.ContentProvider;
 import com.github.roman1306.registry.service.spi.RecordRoleBasedStrategy;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
@@ -22,6 +23,9 @@ public class DefaultContentProvider implements ContentProvider {
     private final DictionaryDao<DepartmentView> departments;
 
     @NonNull
+    private final DictionaryDao<DepartmentView> availableDepartments;
+
+    @NonNull
     private final DictionaryDao<SpecialityView> specialities;
 
     @NonNull
@@ -31,13 +35,15 @@ public class DefaultContentProvider implements ContentProvider {
     private final Collection<RecordRoleBasedStrategy<?>> records;
 
     public DefaultContentProvider(
-            @NonNull DictionaryDao<DepartmentView> departments,
+            @Qualifier("departments-dao") @NonNull DictionaryDao<DepartmentView> departments,
+            @Qualifier("available-departments-dao") @NonNull DictionaryDao<DepartmentView> availableDepartments,
             @NonNull DictionaryDao<SpecialityView> specialities,
             @NonNull DictionaryDao<DoctorView> doctors,
             @NonNull Collection<RecordRoleBasedStrategy<?>> records
     ) {
         this.departments = departments;
         this.specialities = specialities;
+        this.availableDepartments = availableDepartments;
         this.doctors = doctors;
         this.records = records;
     }
@@ -54,13 +60,18 @@ public class DefaultContentProvider implements ContentProvider {
     }
 
     @Override
+    public List<DepartmentView> availableDepartments() {
+        return this.availableDepartments.load();
+    }
+
+    @Override
     public List<DoctorView> doctors() {
         return this.doctors.load();
     }
 
     @Override
     public Page<?> records(User user, Pageable pageable) {
-       return this.records.stream()
+        return this.records.stream()
                 .filter(strategy -> strategy.support(user))
                 .map(strategy -> strategy.records(user, pageable))
                 .findFirst()

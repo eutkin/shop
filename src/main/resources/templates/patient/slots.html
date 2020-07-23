@@ -6,19 +6,27 @@
             <th:block th:each="doctor : ${doctorGroup.keySet()}">
                 <div class="row">
                     <div class="col-md-2">
-                        <img th:src="@{img/defaultAvatar.png}" width="90" height="80", th:alt="${doctor.description}">
+                        <img th:src="${doctor.photo}" width="90" height="80" , th:alt="${doctor.description}">
                     </div>
                     <div class="col-md-10">
-                        <th:block th:each="slot : ${doctorGroup.get(doctor)}">
-                            <button type="button" class="btn btn-danger btn-sm col-margin record-btn"
-                                    th:text="${#temporals.format(slot.time, 'HH:mm')}"
-                                    th:attr="slotId = ${slot.id}"
-                                    th:disabled="${!slot.available}"
-                            >
-                            </button>
-                        </th:block>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p th:text="${#temporals.format(date, 'dd MMMM')}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <th:block th:each="slot : ${doctorGroup.get(doctor)}">
+                                    <button type="button" class="btn btn-danger btn-sm col-margin record-btn"
+                                            th:text="${#temporals.format(slot.time, 'HH:mm')}"
+                                            th:attr="slotId = ${slot.id}"
+                                            th:disabled="${!slot.available}"
+                                    >
+                                    </button>
+                                </th:block>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </th:block>
         </div>

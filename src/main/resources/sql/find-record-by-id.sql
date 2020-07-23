@@ -2,6 +2,7 @@ select ds.time_slot                 as datetime,
        s.name                       as speciality,
        du.name || ' ' || du.surname as doctor_name,
        d.description                as doctor_desc,
+       d.photo                      as doctor_photo,
        d2.name                      as department
 from records r
          inner join doctor_slots ds on r.slot_id = ds.slot_id

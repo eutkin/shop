@@ -131,7 +131,7 @@
         </li>
         <li th:classappend="${records.number == (page - 1)} ? 'active pointer-disabled'"
             class="page-item"
-            th:each="page : ${#numbers.sequence(1, records.totalPages )}">
+            th:each="page : ${#numbers.sequence(1, records.totalPages)}">
             <a class="page-link text-white bg-danger badge-dark"
                th:href="@{/(page=${page - 1}, pageSize=${records.getSize()})}"
                th:text="${page}"></a>

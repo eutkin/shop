@@ -16,7 +16,7 @@
 
 <ul class="list-unstyled" th:each="department : ${departments}">
     <li class="media my-4">
-        <img th:src="@{img/department.jpg}" class="mr-3" width="150" height="150">
+        <img th:src="${department.image}" class="mr-3" width="150" height="150">
         <div class="media-body">
             <h5 class="mt-0 mb-1" th:text="${department.name}"></h5>
             <p th:text="${department.address}">
