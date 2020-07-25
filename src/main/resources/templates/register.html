@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <input id="register-btn" type="submit" class="btn btn-ls btn-danger btn-block"
+    <input id="register-btn" type="submit" class="btn btn-ls btn-success btn-block"
            th:attr="value=#{page.register.button.register}"/>
     <p class="mt-5 mb-3 text-muted" th:text="#{page.register.signature}"></p>
 </form>
@@ -95,7 +95,7 @@
 <script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
 <script>
     $(document).ready(function () {
-        $(".text-danger").hide()
+        $(".text-success").hide()
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content")
 
@@ -146,8 +146,8 @@
                             })
                         },
                         200: function () {
-                            $(".form-control").removeClass('form-control-danger')
-                            $(".text-danger").hide()
+                            $(".form-control").removeClass('form-control-success')
+                            $(".text-success").hide()
                         }
                     }
                 })
