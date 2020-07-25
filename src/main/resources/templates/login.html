@@ -21,7 +21,7 @@
     <input name="password"
            th:classappend="${error} ? 'form-contol-success'"
            th:placeholder="#{page.register.field.password}" class="form-control" type="password"/>
-    <small id="nameHelp" class="text-success"
+    <small id="nameHelp" class="text-danger"
            th:if="${error}"
            th:text="#{page.login.error}"
     >
