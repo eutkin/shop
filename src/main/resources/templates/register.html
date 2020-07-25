@@ -95,7 +95,7 @@
 <script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
 <script>
     $(document).ready(function () {
-        $(".text-success").hide()
+        $(".text-danger").hide()
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content")
 
@@ -146,8 +146,8 @@
                             })
                         },
                         200: function () {
-                            $(".form-control").removeClass('form-control-success')
-                            $(".text-success").hide()
+                            $(".form-control").removeClass('form-control-danger')
+                            $(".text-danger").hide()
                         }
                     }
                 })
