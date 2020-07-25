@@ -11,6 +11,8 @@ public class PatientView {
 
     private String name;
 
+    private String surname;
+
     private LocalDate birthDate;
 
 }

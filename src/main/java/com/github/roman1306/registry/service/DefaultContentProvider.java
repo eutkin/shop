@@ -4,6 +4,7 @@ import com.github.roman1306.registry.dao.DictionaryDao;
 import com.github.roman1306.registry.entity.User;
 import com.github.roman1306.registry.presentation.DepartmentView;
 import com.github.roman1306.registry.presentation.DoctorView;
+import com.github.roman1306.registry.presentation.PatientView;
 import com.github.roman1306.registry.presentation.SpecialityView;
 import com.github.roman1306.registry.service.spi.ContentProvider;
 import com.github.roman1306.registry.service.spi.RecordRoleBasedStrategy;
@@ -32,6 +33,9 @@ public class DefaultContentProvider implements ContentProvider {
     private final DictionaryDao<DoctorView> doctors;
 
     @NonNull
+    private final DictionaryDao<PatientView> patients;
+
+    @NonNull
     private final Collection<RecordRoleBasedStrategy<?>> records;
 
     public DefaultContentProvider(
@@ -39,12 +43,13 @@ public class DefaultContentProvider implements ContentProvider {
             @Qualifier("available-departments-dao") @NonNull DictionaryDao<DepartmentView> availableDepartments,
             @NonNull DictionaryDao<SpecialityView> specialities,
             @NonNull DictionaryDao<DoctorView> doctors,
-            @NonNull Collection<RecordRoleBasedStrategy<?>> records
+            @NonNull DictionaryDao<PatientView> patients, @NonNull Collection<RecordRoleBasedStrategy<?>> records
     ) {
         this.departments = departments;
         this.specialities = specialities;
         this.availableDepartments = availableDepartments;
         this.doctors = doctors;
+        this.patients = patients;
         this.records = records;
     }
 
@@ -67,6 +72,11 @@ public class DefaultContentProvider implements ContentProvider {
     @Override
     public List<DoctorView> doctors() {
         return this.doctors.load();
+    }
+
+    @Override
+    public List<PatientView> patients() {
+        return this.patients.load();
     }
 
     @Override

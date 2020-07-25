@@ -24,6 +24,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/contacts}" th:text="#{common.menu.contacts}"></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/patients}" th:text="#{common.menu.patients}"></a>
+                </li>
             </ul>
             <form class="form-inline" id="logout-form" method="post" th:action="@{/logout}">
                 <span class="navbar-text text-dark" sec:authentication="name"></span>
