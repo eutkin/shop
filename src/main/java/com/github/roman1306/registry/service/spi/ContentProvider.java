@@ -3,6 +3,7 @@ package com.github.roman1306.registry.service.spi;
 import com.github.roman1306.registry.entity.User;
 import com.github.roman1306.registry.presentation.DepartmentView;
 import com.github.roman1306.registry.presentation.DoctorView;
+import com.github.roman1306.registry.presentation.PatientView;
 import com.github.roman1306.registry.presentation.SpecialityView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +47,9 @@ public interface ContentProvider {
      * @param pageable запрос страницы
      * @return страница с записями
      */
+    @NonNull
+    List<PatientView> patients();
+
     @NonNull
     Page<?> records(@NonNull User user, @NonNull Pageable pageable);
 }
