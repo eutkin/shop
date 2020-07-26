@@ -31,7 +31,7 @@ public class DoctorsJdbcDao implements DictionaryDao<DoctorView> {
                         .setId(UUID.fromString(rs.getString("doctor_id")))
                         .setName(rs.getString("name"))
                         .setDescription(rs.getString("description"))
-                .setPhoto(rs.getString("photo"))
+                        .setPhoto(rs.getString("photo"))
         );
     }
 }

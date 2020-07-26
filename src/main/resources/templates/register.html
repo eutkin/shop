@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="#{page.register.title}"></title>
     <link th:rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/4.5.0/css/bootstrap.min.css} "/>
     <link th:href="@{css/index.css}" rel="stylesheet" type="text/css">
-    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body class="text-center">
@@ -86,74 +86,13 @@
         </div>
     </div>
 
-    <input id="register-btn" type="submit" class="btn btn-ls btn-danger btn-block"
+    <input id="register-btn" type="submit" class="btn btn-ls btn-success btn-block"
            th:attr="value=#{page.register.button.register}"/>
     <p class="mt-5 mb-3 text-muted" th:text="#{page.register.signature}"></p>
 </form>
 <script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
 <script th:src="@{/webjars/popper.js/2.0.2/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
-<script>
-    $(document).ready(function () {
-        $(".text-danger").hide()
-        let token = $("meta[name='_csrf']").attr("content");
-        let header = $("meta[name='_csrf_header']").attr("content")
-
-        $('#register-btn').click(function (event) {
-            let $password1 = $('#password1');
-            let $password2 = $('#password2');
-            let $passwordHelp = $('#passwordHelp');
-            event.preventDefault()
-
-            let pass1 = $password1.val();
-            let pass2 = $password2.val();
-            if (pass1 !== pass2) {
-                $password1.alert()
-                $password2.alert()
-                $passwordHelp.show()
-            } else {
-                $passwordHelp.hide()
-                let headers = {}
-                headers[header] = token
-                $.ajax({
-                    url: '/register',
-                    data: JSON.stringify({
-                        username: $("[name='username']").val(),
-                        name: $("[name='name']").val(),
-                        surname: $("[name='surname']").val(),
-                        birthDate: $("[name='birthDate']").val(),
-                        password: pass1,
-                        roles: [{
-                            name: $("[name='roles']").val()
-                        }]
-                    }),
-                    headers: headers,
-                    contentType: 'application/json',
-                    method: 'POST',
-                    success: function () {
-                        $(location).attr('href', '/');
-                    },
-                    statusCode: {
-                        400: function (data) {
-                            let errors = data.responseJSON;
-                            $(".text-danger").hide()
-                            $(".form-control").removeClass('form-control-danger')
-                            Object.keys(errors).forEach(name => {
-                                $("[name='" + name + "']").addClass('form-control-danger')
-                                let helper = $("#" + name + "Help");
-                                helper.text(errors[name])
-                                helper.show()
-                            })
-                        },
-                        200: function () {
-                            $(".form-control").removeClass('form-control-danger')
-                            $(".text-danger").hide()
-                        }
-                    }
-                })
-            }
-        })
-    })
-</script>
+<script th:src="@{js/validation-register.js}"></script>
 </body>
 </html>

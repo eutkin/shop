@@ -14,19 +14,22 @@
 <body>
 <header th:insert="common/top-menu.html :: menu"></header>
 
-<div class="row row-cols-1 row-cols-md-4" style="margin-top: 10px; margin-left: 10%; margin-right: 10%">
-    <th:block th:each="doctor : ${doctors}">
-        <div class="col mb-4">
-            <div class="card">
-                <img th:src="${doctor.photo}" class="card-img-top" alt="..." width="250" height="250">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${doctor.name}"></h5>
-                    <p class="card-text" th:text="${doctor.description}"></p>
-                </div>
-            </div>
-        </div>
-    </th:block>
-</div>
+<table class="table table-success table-striped">
+    <thead>
+    <tr>
+        <th scope="col" th:text="#{page.patients.name}"></th>
+        <th scope="col" th:text="#{page.patients.surname}"></th>
+        <th scope="col" th:text="#{page.patients.birth-date}"></th>
+    </tr>
+    </thead>
+    <tbody id="record-table">
+    <tr th:each="patient : ${patients}">
+        <td th:text="${patient.name}"></td>
+        <td th:text="${patient.surname}"></td>
+        <td th:text="${#temporals.format(patient.birthDate, 'yyyy')}"></td>
+    </tr>
+    </tbody>
+</table>
 
 <script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
 <script th:src="@{/webjars/popper.js/2.0.2/umd/popper.min.js}"></script>

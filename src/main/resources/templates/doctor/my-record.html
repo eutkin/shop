@@ -18,7 +18,7 @@
 <header th:insert="common/top-menu.html :: menu"></header>
 
 
-<table class="table table-danger table-striped">
+<table class="table table-success table-striped">
     <thead>
     <tr>
         <th scope="col" th:text="#{page.doctor.my-record.records.datetime}"></th>
@@ -38,10 +38,10 @@
 </table>
 
 <nav aria-label="Pagination" th:if="${!records.isEmpty()}">
-    <ul class="pagination">
+    <ul class="pagination justify-content-center">
         <li th:classappend="${!records.hasPrevious()} ? disabled" class="page-item">
-            <a class="page-link" th:unless="${records.hasPrevious()}">&laquo;</a>
-            <a class="page-link"
+            <a class="page-link text-white bg-success badge-dark" th:unless="${records.hasPrevious()}">&laquo;</a>
+            <a class="page-link text-white bg-success badge-dark"
                th:if="${records.hasPrevious()}"
                th:with="pr = ${records.previousPageable()}"
                th:href="@{/(page=${pr.getPageNumber()}, pageSize=${pr.getPageSize()})}">&laquo;</a>
@@ -49,12 +49,12 @@
         <li th:classappend="${records.number == (page - 1)} ? 'active pointer-disabled'"
             class="page-item"
             th:each="page : ${#numbers.sequence(1, records.totalPages )}">
-            <a class="page-link" th:href="@{/(page=${page - 1}, pageSize=${records.getSize()})}"
+            <a class="page-link text-white bg-success badge-dark" th:href="@{/(page=${page - 1}, pageSize=${records.getSize()})}"
                th:text="${page}"></a>
         </li>
         <li th:classappend="${!records.hasNext()} ? disabled" class="page-item">
-            <a class="page-link" th:unless="${records.hasNext()}">&raquo;</a>
-            <a class="page-link"
+            <a class="page-link text-white bg-success badge-dark" th:unless="${records.hasNext()}">&raquo;</a>
+            <a class="page-link text-white bg-success badge-dark"
                th:if="${records.hasNext()}"
                th:with="next = ${records.nextPageable()}"
                th:href="@{/(page=${next.getPageNumber()}, pageSize=${next.getPageSize()})}">&raquo;</a>
