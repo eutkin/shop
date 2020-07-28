@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @SpringBootApplication
 // TODO: 12.07.2020 Разобраться как работает
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RegistryApplication {
 
     public static void main(String[] args) {
